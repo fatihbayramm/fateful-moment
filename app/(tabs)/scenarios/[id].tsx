@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { scenarios } from "../../../data/scenarios";
+
+import ScenarioOptions from "./components/scenario/ScenarioOptions";
 import { colors } from "../../../constants/theme";
+import { scenarios, type ScenarioOption } from "../../../data/scenarios";
 
 const imageMap: Record<number, any> = {
   1: require("../../../assets/images/scenarios/iraq_war.jpeg"),
@@ -13,6 +16,9 @@ const imageMap: Record<number, any> = {
 
 export default function Scenario() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const [started, setStarted] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<ScenarioOption | null>(null);
+
   const scenario = scenarios.find((item) => item.id === Number(id));
 
   if (!scenario) {
@@ -23,15 +29,25 @@ export default function Scenario() {
     <View style={styles.container}>
       <ImageBackground source={imageMap[scenario.id]} style={styles.image} imageStyle={styles.imageStyle}>
         <View style={styles.overlay}>
-          <Text style={styles.badge}>SCENARIO BRIEFING</Text>
+          {started ? (
+            <ScenarioOptions
+              options={scenario.options}
+              time={scenario.time}
+              onSelect={setSelectedOption}
+            />
+          ) : (
+            <>
+              <Text style={styles.badge}>SCENARIO BRIEFING</Text>
 
-          <Text style={styles.title}>{scenario.title}</Text>
+              <Text style={styles.title}>{scenario.title}</Text>
 
-          <Text style={styles.description}>{scenario.description}</Text>
+              <Text style={styles.description}>{scenario.description}</Text>
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Start Simulation</Text>
-          </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => setStarted(true)}>
+                <Text style={styles.buttonText}>Start Simulation</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </ImageBackground>
     </View>
@@ -59,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 24,
+    paddingVertical: 32,
     backgroundColor: "rgba(2, 6, 23, 0.4)",
   },
   badge: {
