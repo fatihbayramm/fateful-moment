@@ -26,8 +26,7 @@ const getProgressColor = (progress: number) => {
   const from = hexToRgb(colors.primary.main);
   const to = hexToRgb(colors.red.main);
 
-  const channel = (start: number, end: number) =>
-    Math.round(start + (end - start) * (1 - progress));
+  const channel = (start: number, end: number) => Math.round(start + (end - start) * (1 - progress));
 
   return `rgb(${channel(from.r, to.r)}, ${channel(from.g, to.g)}, ${channel(from.b, to.b)})`;
 };
@@ -59,10 +58,7 @@ export default function ScenarioOptions({ options, time, onSelect }: ScenarioOpt
 
       <View style={styles.progressTrack}>
         <View
-          style={[
-            styles.progressFill,
-            { width: `${progress * 100}%`, backgroundColor: getProgressColor(progress) },
-          ]}
+          style={[styles.progressFill, { width: `${progress * 100}%`, backgroundColor: getProgressColor(progress) }]}
         />
       </View>
     </View>
@@ -104,7 +100,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 6,
     borderRadius: 3,
-    backgroundColor: colors.border.main,
     overflow: "hidden",
     flexDirection: "row",
     justifyContent: "center",
