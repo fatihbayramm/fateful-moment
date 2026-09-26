@@ -32,8 +32,7 @@ export default function ScenarioCard({ title, description, time, image, onPress 
 
 const styles = StyleSheet.create({
   card: {
-    width: 280,
-    height: 350,
+    width: 250,
     borderRadius: 16,
     overflow: "hidden",
     marginRight: 16,
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    padding: 16,
+    padding: 14,
     justifyContent: "flex-end",
     backgroundColor: "rgba(2, 6, 23, 0.4)",
   },
@@ -57,31 +56,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   time: {
     color: colors.primary.main,
-    fontSize: 12,
+    fontSize: 11,
   },
   title: {
     color: colors.text.main,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 6,
   },
   description: {
     color: colors.bodyText.main,
-    fontSize: 14,
-    marginBottom: 16,
-    lineHeight: 20,
+    fontSize: 13,
+    marginBottom: 12,
+    lineHeight: 19,
+    flexShrink: 1,
   },
   button: {
     backgroundColor: "rgba(2, 6, 23, 0.8)",
     borderWidth: 1,
     borderColor: colors.primary.main,
-    paddingVertical: 10,
-    paddingHorizontal: 24,
-    borderRadius: 24,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 20,
     alignSelf: "flex-start",
   },
   buttonText: {

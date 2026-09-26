@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { router } from "expo-router";
+
 import ScenarioCard from "./components/scenario/ScenarioCard";
 import { scenarios } from "../../../data/scenarios";
 import { colors } from "../../../constants/theme";
-import { router } from "expo-router";
 
 // Helper to map image assets
 const imageMap: { [key: number]: any } = {
@@ -14,15 +16,24 @@ const imageMap: { [key: number]: any } = {
 };
 
 export default function ScenariosScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
       <Text style={styles.header}>Scenarios</Text>
+
       <Text style={styles.subHeader}>
         Choose A Scenario And Ask Yourself, "If You Were In That Situation, What Would You Do?"
       </Text>
+
       <Text style={styles.count}>{scenarios.length} Scenarios</Text>
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.list}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
+      >
         {scenarios.map((scenario) => (
           <ScenarioCard
             key={scenario.id}
@@ -42,26 +53,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background.main,
-    paddingTop: 60,
     paddingHorizontal: 20,
+    paddingBottom: 12,
   },
   header: {
     color: colors.text.main,
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 6,
   },
   subHeader: {
     color: colors.primary.main,
-    marginBottom: 24,
-    fontSize: 16,
+    marginBottom: 12,
+    fontSize: 14,
   },
   count: {
     color: colors.bodyText.main,
-    marginBottom: 20,
+    marginBottom: 12,
+    fontSize: 13,
     fontWeight: "600",
   },
   list: {
+    flex: 1,
+  },
+  listContent: {
+    alignItems: "stretch",
     paddingRight: 20,
   },
 });
