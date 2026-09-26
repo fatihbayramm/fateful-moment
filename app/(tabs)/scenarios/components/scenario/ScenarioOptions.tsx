@@ -48,12 +48,20 @@ export default function ScenarioOptions({ options, time, onSelect }: ScenarioOpt
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.grid} showsVerticalScrollIndicator={false}>
-        {options.map((option) => (
-          <TouchableOpacity key={option.id} style={styles.card} onPress={() => onSelect(option)}>
-            <Text style={styles.title}>{option.title}</Text>
-            <Text style={styles.description}>{option.description}</Text>
-          </TouchableOpacity>
-        ))}
+        {options.map((option, index) => {
+          const isLastOrphan = index === options.length - 1 && options.length % 2 === 1;
+
+          return (
+            <TouchableOpacity
+              key={option.id}
+              style={[styles.card, isLastOrphan && styles.cardOrphan]}
+              onPress={() => onSelect(option)}
+            >
+              <Text style={styles.title}>{option.title}</Text>
+              <Text style={styles.description}>{option.description}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
 
       <View style={styles.progressTrack}>
@@ -68,16 +76,22 @@ export default function ScenarioOptions({ options, time, onSelect }: ScenarioOpt
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
+    paddingHorizontal: 32,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   grid: {
     flexGrow: 1,
     width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignContent: "center",
     gap: 12,
     paddingBottom: 16,
   },
   card: {
-    width: "100%",
+    width: "48%",
     backgroundColor: colors.secondary.main,
     borderRadius: 18,
     borderWidth: 1,
@@ -85,16 +99,19 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 18,
   },
+  cardOrphan: {
+    width: "40%",
+  },
   title: {
     color: colors.text.main,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "bold",
     marginBottom: 6,
   },
   description: {
     color: colors.bodyText.main,
-    fontSize: 13,
-    lineHeight: 19,
+    fontSize: 12,
+    lineHeight: 17,
   },
   progressTrack: {
     width: "100%",

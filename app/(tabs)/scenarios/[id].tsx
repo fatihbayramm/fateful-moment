@@ -25,29 +25,31 @@ export default function Scenario() {
     return null;
   }
 
+  if (started) {
+    return (
+      <View style={styles.fullScreen}>
+        <ImageBackground source={imageMap[scenario.id]} style={styles.imageDetail} imageStyle={styles.imageStyle}>
+          <View style={styles.fullScreenOverlay}>
+            <ScenarioOptions options={scenario.options} time={scenario.time} onSelect={setSelectedOption} />
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={imageMap[scenario.id]} style={styles.image} imageStyle={styles.imageStyle}>
         <View style={styles.overlay}>
-          {started ? (
-            <ScenarioOptions
-              options={scenario.options}
-              time={scenario.time}
-              onSelect={setSelectedOption}
-            />
-          ) : (
-            <>
-              <Text style={styles.badge}>SCENARIO BRIEFING</Text>
+          <Text style={styles.badge}>SCENARIO BRIEFING</Text>
 
-              <Text style={styles.title}>{scenario.title}</Text>
+          <Text style={styles.title}>{scenario.title}</Text>
 
-              <Text style={styles.description}>{scenario.description}</Text>
+          <Text style={styles.description}>{scenario.description}</Text>
 
-              <TouchableOpacity style={styles.button} onPress={() => setStarted(true)}>
-                <Text style={styles.buttonText}>Start Simulation</Text>
-              </TouchableOpacity>
-            </>
-          )}
+          <TouchableOpacity style={styles.button} onPress={() => setStarted(true)}>
+            <Text style={styles.buttonText}>Start Simulation</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -60,11 +62,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.main,
     padding: 20,
   },
+  fullScreen: {
+    flex: 1,
+    backgroundColor: colors.background.main,
+  },
   image: {
     flex: 1,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.border.main,
+    overflow: "hidden",
+  },
+  imageDetail: {
+    flex: 1,
     overflow: "hidden",
   },
   imageStyle: {
@@ -77,6 +87,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 32,
     backgroundColor: "rgba(2, 6, 23, 0.4)",
+  },
+  fullScreenOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(2, 6, 23, 0.55)",
   },
   badge: {
     color: colors.primary.main,
