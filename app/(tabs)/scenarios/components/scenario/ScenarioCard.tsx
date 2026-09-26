@@ -1,6 +1,6 @@
-import React from "react";
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
 import { colors } from "../../../../../constants/theme";
+import AlarmClockIcon from "../../../../../assets/icons/alarm-clock.svg";
 
 interface ScenarioCardProps {
   title: string;
@@ -12,10 +12,13 @@ interface ScenarioCardProps {
 
 export default function ScenarioCard({ title, description, time, image, onPress }: ScenarioCardProps) {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <ImageBackground source={image} style={styles.image} imageStyle={styles.imageStyle}>
         <View style={styles.overlay}>
-          <Text style={styles.time}>{time}</Text>
+          <View style={styles.timeRow}>
+            <AlarmClockIcon width={16} height={16} color={colors.primary.main} />
+            <Text style={styles.time}>{time}</Text>
+          </View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
           <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -23,7 +26,7 @@ export default function ScenarioCard({ title, description, time, image, onPress 
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -50,9 +53,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     backgroundColor: "rgba(2, 6, 23, 0.4)",
   },
+  timeRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginBottom: 8,
+  },
   time: {
     color: colors.primary.main,
-    marginBottom: 8,
     fontSize: 12,
   },
   title: {

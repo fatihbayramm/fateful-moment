@@ -11,10 +11,9 @@ export default function ScenariosLayout() {
       <Stack.Screen
         name="[id]"
         options={({ route }) => {
-          const id = (route.params as any)?.id;
           return {
             headerTitleAlign: "center",
-            headerShown: true,
+            headerShown: false,
             headerBackVisible: false,
             headerStyle: {
               backgroundColor: "#fff",

@@ -30,7 +30,7 @@ export default function ScenariosScreen() {
             description={scenario.description}
             time={scenario.time}
             image={imageMap[scenario.id]}
-            onPress={() => router.push(``)}
+            onPress={() => router.push(`/scenarios/${scenario.id}`)}
           />
         ))}
       </ScrollView>
