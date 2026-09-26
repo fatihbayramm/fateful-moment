@@ -16,7 +16,7 @@ export const colors = {
   red: {
     main: brandRed,
   },
-  bacground: {
+  background: {
     main: brandBackground,
   },
   border: {

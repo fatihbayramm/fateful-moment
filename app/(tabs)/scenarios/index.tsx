@@ -41,7 +41,7 @@ export default function ScenariosScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bacground.main,
+    backgroundColor: colors.background.main,
     paddingTop: 60,
     paddingHorizontal: 20,
   },
