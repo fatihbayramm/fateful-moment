@@ -19,8 +19,15 @@ export default function ScenarioCard({ title, description, time, image, onPress 
             <AlarmClockIcon width={16} height={16} color={colors.primary.main} />
             <Text style={styles.time}>{time}</Text>
           </View>
-          <Text style={styles.title}>{title}</Text>
+
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+
           <Text style={styles.description}>{description}</Text>
+        </View>
+
+        <View style={styles.footer}>
           <TouchableOpacity style={styles.button} onPress={onPress}>
             <Text style={styles.buttonText}>Start</Text>
           </TouchableOpacity>
@@ -32,7 +39,7 @@ export default function ScenarioCard({ title, description, time, image, onPress 
 
 const styles = StyleSheet.create({
   card: {
-    width: 250,
+    width: 260,
     borderRadius: 16,
     overflow: "hidden",
     marginRight: 16,
@@ -48,15 +55,16 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    padding: 14,
-    justifyContent: "flex-end",
+    paddingHorizontal: 14,
+    paddingTop: 12,
+    paddingBottom: 48,
     backgroundColor: "rgba(2, 6, 23, 0.4)",
   },
   timeRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   time: {
     color: colors.primary.main,
@@ -64,25 +72,28 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text.main,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-    marginBottom: 6,
+    marginBottom: 4,
   },
   description: {
+    flex: 1,
     color: colors.bodyText.main,
-    fontSize: 13,
-    marginBottom: 12,
-    lineHeight: 19,
-    flexShrink: 1,
+    fontSize: 12,
+    lineHeight: 17,
+  },
+  footer: {
+    position: "absolute",
+    right: 14,
+    bottom: 10,
   },
   button: {
     backgroundColor: "rgba(2, 6, 23, 0.8)",
     borderWidth: 1,
     borderColor: colors.primary.main,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 18,
     borderRadius: 20,
-    alignSelf: "flex-start",
   },
   buttonText: {
     color: colors.text.main,

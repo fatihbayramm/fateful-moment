@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 import ScenarioCard from "./components/scenario/ScenarioCard";
+import TabMenu from "../components/TabMenu";
 import { scenarios } from "../../../data/scenarios";
 import { colors } from "../../../constants/theme";
 
@@ -20,6 +21,10 @@ export default function ScenariosScreen() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
+      <View style={styles.topBar}>
+        <TabMenu />
+      </View>
+
       <Text style={styles.header}>Scenarios</Text>
 
       <Text style={styles.subHeader}>
@@ -56,21 +61,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 12,
   },
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
   header: {
     color: colors.text.main,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 6,
+    marginBottom: 4,
   },
   subHeader: {
     color: colors.primary.main,
-    marginBottom: 12,
-    fontSize: 14,
+    marginBottom: 8,
+    fontSize: 13,
   },
   count: {
     color: colors.bodyText.main,
-    marginBottom: 12,
-    fontSize: 13,
+    marginBottom: 8,
+    fontSize: 12,
     fontWeight: "600",
   },
   list: {

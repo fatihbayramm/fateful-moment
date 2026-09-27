@@ -26,12 +26,17 @@
       "favicon": ""
     },
     "plugins": [
-      "expo-status-bar",
       [
         "expo-navigation-bar",
         {
           "hidden": true,
           "enforceContrast": false
+        }
+      ],
+      [
+        "expo-status-bar",
+        {
+          "hidden": true
         }
       ],
       "./plugins/withForcedEdgeToEdge"

@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { NavigationBar } from "expo-navigation-bar";
+import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 
 import { colors } from "../constants/theme";
@@ -7,6 +8,7 @@ import { colors } from "../constants/theme";
 export default function RootLayout() {
   return (
     <View style={styles.root}>
+      <StatusBar hidden />
       <NavigationBar hidden />
       <Stack
         screenOptions={{
