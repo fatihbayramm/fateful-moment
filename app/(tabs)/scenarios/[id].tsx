@@ -3,6 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import ScenarioOptions from "./components/scenario/ScenarioOptions";
+import DecisionDna from "./components/decision/DecisionDna";
 import { colors } from "../../../constants/theme";
 import { scenarios, type ScenarioOption } from "../../../data/scenarios";
 
@@ -23,6 +24,18 @@ export default function Scenario() {
 
   if (!scenario) {
     return null;
+  }
+
+  if (selectedOption) {
+    return (
+      <View style={styles.fullScreen}>
+        <ImageBackground source={imageMap[scenario.id]} style={styles.imageDetail} imageStyle={styles.imageStyle}>
+          <View style={styles.fullScreenOverlay}>
+            <DecisionDna dna={selectedOption.decisionDna} />
+          </View>
+        </ImageBackground>
+      </View>
+    );
   }
 
   if (started) {
