@@ -72,7 +72,7 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <Text style={styles.title}>Karar DNA’sı</Text>
+      <Text style={styles.title}>Decision DNA</Text>
 
       <View style={styles.columns}>
         <View style={styles.column}>
@@ -118,19 +118,19 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
         </View>
 
         <View style={styles.column}>
-          {patternNotes.map((note, index) => (
-            <View key={index} style={styles.patternCard}>
-              <View style={styles.cardHeader}>
-                <ActivityIcon width={16} height={16} color={colors.primary.main} />
-                <Text style={styles.cardTitle}>PATTERN DETECTION</Text>
-              </View>
+          <View style={styles.patternCard}>
+            <View style={styles.cardHeader}>
+              <ActivityIcon width={16} height={16} color={colors.primary.main} />
+              <Text style={styles.cardTitle}>PATTERN DETECTION</Text>
+            </View>
 
-              <View style={styles.patternItem}>
+            {patternNotes.map((note, index) => (
+              <View key={index} style={styles.patternItem}>
                 <Text style={styles.patternIndex}>{String(index + 1).padStart(2, "0")}</Text>
                 <Text style={styles.patternText}>{note}</Text>
               </View>
-            </View>
-          ))}
+            ))}
+          </View>
 
           <View style={styles.blindSpotCard}>
             <View style={styles.blindSpotHeader}>
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
   patternItem: {
     flexDirection: "row",
     gap: 8,
+    marginBottom: 5,
   },
   patternIndex: {
     color: colors.primary.main,
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.bodyText.main,
     fontSize: 10,
-    lineHeight: 15,
+    lineHeight: 14,
   },
   blindSpotCard: {
     backgroundColor: "rgba(251, 44, 54, 0.08)",
