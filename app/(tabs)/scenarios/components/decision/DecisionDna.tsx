@@ -55,12 +55,20 @@ const blindSpotQuestions: Record<MetricKey, string> = {
 
 const getPortraitKey = (portrait: string) => portrait.split("/").pop() ?? "";
 
+const splitPatternNotes = (patternNote: string) =>
+  patternNote
+    .split(/(?<=\.)\s+/)
+    .map((note) => note.trim())
+    .filter(Boolean)
+    .slice(0, 2);
+
 const getWeakestMetric = (metrics: Metrics) =>
   metricAxes.reduce((weakest, axis) => (metrics[axis.key] < metrics[weakest.key] ? axis : weakest));
 
 export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
   const weakest = getWeakestMetric(dna.metrics);
   const portrait = portraitMap[getPortraitKey(dna.portrait)];
+  const patternNotes = splitPatternNotes(dna.patternNote);
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
@@ -110,17 +118,19 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
         </View>
 
         <View style={styles.column}>
-          <View style={styles.patternCard}>
-            <View style={styles.cardHeader}>
-              <ActivityIcon width={16} height={16} color={colors.primary.main} />
-              <Text style={styles.cardTitle}>PATTERN DETECTION</Text>
-            </View>
+          {patternNotes.map((note, index) => (
+            <View key={index} style={styles.patternCard}>
+              <View style={styles.cardHeader}>
+                <ActivityIcon width={16} height={16} color={colors.primary.main} />
+                <Text style={styles.cardTitle}>PATTERN DETECTION</Text>
+              </View>
 
-            <View style={styles.patternItem}>
-              <Text style={styles.patternIndex}>01</Text>
-              <Text style={styles.patternText}>{dna.patternNote}</Text>
+              <View style={styles.patternItem}>
+                <Text style={styles.patternIndex}>{String(index + 1).padStart(2, "0")}</Text>
+                <Text style={styles.patternText}>{note}</Text>
+              </View>
             </View>
-          </View>
+          ))}
 
           <View style={styles.blindSpotCard}>
             <View style={styles.blindSpotHeader}>
