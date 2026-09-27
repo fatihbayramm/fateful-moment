@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { colors } from "../../../../../constants/theme";
+import BackButton from "../../../../../components/common/BackButton";
 import type { ScenarioOption } from "../../../../../data/scenarios";
 
 interface ScenarioOptionsProps {
   options: ScenarioOption[];
   time: string;
   onSelect: (option: ScenarioOption) => void;
+  onBack?: () => void;
 }
 
 const parseTimeToSeconds = (time: string) => {
@@ -31,7 +33,7 @@ const getProgressColor = (progress: number) => {
   return `rgb(${channel(from.r, to.r)}, ${channel(from.g, to.g)}, ${channel(from.b, to.b)})`;
 };
 
-export default function ScenarioOptions({ options, time, onSelect }: ScenarioOptionsProps) {
+export default function ScenarioOptions({ options, time, onSelect, onBack }: ScenarioOptionsProps) {
   const totalSeconds = useRef(parseTimeToSeconds(time)).current;
   const [remainingSeconds, setRemainingSeconds] = useState(totalSeconds);
 
@@ -47,6 +49,10 @@ export default function ScenarioOptions({ options, time, onSelect }: ScenarioOpt
 
   return (
     <View style={styles.container}>
+      <View style={styles.topBar}>
+        <BackButton onPress={onBack} />
+      </View>
+
       <ScrollView contentContainerStyle={styles.grid} showsVerticalScrollIndicator={false}>
         {options.map((option, index) => {
           const isLastOrphan = index === options.length - 1 && options.length % 2 === 1;
@@ -79,6 +85,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     paddingTop: 12,
     paddingBottom: 12,
+  },
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
   },
   grid: {
     flexGrow: 1,

@@ -4,6 +4,7 @@ import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react
 
 import ScenarioOptions from "./components/scenario/ScenarioOptions";
 import DecisionDna from "./components/decision/DecisionDna";
+import BackButton from "../../../components/common/BackButton";
 import { colors } from "../../../constants/theme";
 import { scenarios, type ScenarioOption } from "../../../data/scenarios";
 
@@ -43,7 +44,12 @@ export default function Scenario() {
       <View style={styles.fullScreen}>
         <ImageBackground source={imageMap[scenario.id]} style={styles.imageDetail} imageStyle={styles.imageStyle}>
           <View style={styles.fullScreenOverlay}>
-            <ScenarioOptions options={scenario.options} time={scenario.time} onSelect={setSelectedOption} />
+            <ScenarioOptions
+              options={scenario.options}
+              time={scenario.time}
+              onSelect={setSelectedOption}
+              onBack={() => setStarted(false)}
+            />
           </View>
         </ImageBackground>
       </View>
@@ -52,19 +58,25 @@ export default function Scenario() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={imageMap[scenario.id]} style={styles.image} imageStyle={styles.imageStyle}>
-        <View style={styles.overlay}>
-          <Text style={styles.badge}>SCENARIO BRIEFING</Text>
+      <View style={styles.briefing}>
+        <ImageBackground source={imageMap[scenario.id]} style={styles.image} imageStyle={styles.imageStyle}>
+          <View style={styles.overlay}>
+            <Text style={styles.badge}>SCENARIO BRIEFING</Text>
 
-          <Text style={styles.title}>{scenario.title}</Text>
+            <Text style={styles.title}>{scenario.title}</Text>
 
-          <Text style={styles.description}>{scenario.description}</Text>
+            <Text style={styles.description}>{scenario.description}</Text>
 
-          <TouchableOpacity style={styles.button} onPress={() => setStarted(true)}>
-            <Text style={styles.buttonText}>Start Simulation</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => setStarted(true)}>
+              <Text style={styles.buttonText}>Start Simulation</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+
+        <View style={styles.floatingBack}>
+          <BackButton />
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 }
@@ -78,6 +90,20 @@ const styles = StyleSheet.create({
   fullScreen: {
     flex: 1,
     backgroundColor: colors.background.main,
+  },
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  briefing: {
+    flex: 1,
+  },
+  floatingBack: {
+    position: "absolute",
+    top: 12,
+    left: 12,
+    zIndex: 1,
   },
   image: {
     flex: 1,

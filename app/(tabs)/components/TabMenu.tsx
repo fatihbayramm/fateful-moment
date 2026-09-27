@@ -69,10 +69,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 40,
     height: 40,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border.main,
-    backgroundColor: colors.secondary.main,
   },
   backdrop: {
     flex: 1,
