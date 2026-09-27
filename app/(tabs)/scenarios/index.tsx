@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 
 import ScenarioCard from "./components/scenario/ScenarioCard";
@@ -17,10 +16,8 @@ const imageMap: { [key: number]: any } = {
 };
 
 export default function ScenariosScreen() {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
+    <View style={styles.container}>
       <View style={styles.topBar}>
         <TabMenu />
       </View>
@@ -58,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background.main,
+    paddingTop: 16,
     paddingHorizontal: 20,
     paddingBottom: 12,
   },

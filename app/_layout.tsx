@@ -1,15 +1,17 @@
 import { Stack } from "expo-router";
 import { NavigationBar } from "expo-navigation-bar";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { colors } from "../constants/theme";
 
 export default function RootLayout() {
   return (
-    <View style={styles.root}>
+    <SafeAreaView style={styles.root} edges={["top", "bottom", "left", "right"]}>
       <StatusBar hidden />
       <NavigationBar hidden />
+
       <Stack
         screenOptions={{
           headerShown: false,
@@ -25,7 +27,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </View>
+    </SafeAreaView>
   );
 }
 
