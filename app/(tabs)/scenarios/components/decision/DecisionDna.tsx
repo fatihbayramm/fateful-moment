@@ -6,8 +6,15 @@ import type { DecisionDna as DecisionDnaType, Metrics } from "../../../../../dat
 
 type MetricKey = keyof Metrics;
 
+import DnaIcon from "../../../../../assets/icons/dna.svg";
 import ActivityIcon from "../../../../../assets/icons/activity.svg";
-import CpuIcon from "../../../../../assets/icons/cpu.svg";
+import TargetIcon from "../../../../../assets/icons/target.svg";
+import EyeIcon from "../../../../../assets/icons/eye.svg";
+import VectorIcon from "../../../../../assets/icons/vector.svg";
+import RiskIcon from "../../../../../assets/icons/risk.svg";
+import SettingsIcon from "../../../../../assets/icons/settings_2.svg";
+import HeartIcon from "../../../../../assets/icons/heart.svg";
+import BalanceIcon from "../../../../../assets/icons/balance.svg";
 
 const portraitMap: Record<string, any> = {
   "asiri-analist.png": require("../../../../../assets/images/dna-portraits/asiri-analist.png"),
@@ -28,13 +35,13 @@ const portraitMap: Record<string, any> = {
   "uyumcu.png": require("../../../../../assets/images/dna-portraits/uyumcu.png"),
 };
 
-const metricAxes: { key: MetricKey; label: string }[] = [
-  { key: "vision", label: "Vision" },
-  { key: "courage", label: "Courage" },
-  { key: "risk", label: "Risk" },
-  { key: "control", label: "Control" },
-  { key: "empathy", label: "Empathy" },
-  { key: "ethics", label: "Ethics" },
+const metricAxes: { key: MetricKey; label: string; Icon: any }[] = [
+  { key: "vision", label: "Vision", Icon: EyeIcon },
+  { key: "courage", label: "Courage", Icon: VectorIcon },
+  { key: "risk", label: "Risk", Icon: RiskIcon },
+  { key: "control", label: "Control", Icon: SettingsIcon },
+  { key: "empathy", label: "Empathy", Icon: HeartIcon },
+  { key: "ethics", label: "Ethics", Icon: BalanceIcon },
 ];
 
 const blindSpotQuestions: Record<MetricKey, string> = {
@@ -75,7 +82,7 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
 
           <View style={styles.matrixCard}>
             <View style={styles.cardHeader}>
-              <ActivityIcon width={16} height={16} color={colors.primary.main} />
+              <DnaIcon width={16} height={16} color={colors.primary.main} />
               <Text style={styles.cardTitle}>PSYCHOLOGICAL MATRIX</Text>
             </View>
 
@@ -85,9 +92,12 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
               <View style={styles.metricGrid}>
                 {metricAxes.map((axis) => (
                   <View key={axis.key} style={styles.metricItem}>
-                    <Text style={styles.metricLabel}>{axis.label.toUpperCase()}</Text>
+                    <View style={styles.metricTop}>
+                      <axis.Icon width={11} height={11} color={colors.bodyText.main} />
+                      <Text style={styles.metricValue}>{dna.metrics[axis.key]}</Text>
+                    </View>
 
-                    <Text style={styles.metricValue}>{dna.metrics[axis.key]}</Text>
+                    <Text style={styles.metricLabel}>{axis.label.toUpperCase()}</Text>
 
                     <View style={styles.metricTrack}>
                       <View style={[styles.metricFill, { width: `${Math.max(dna.metrics[axis.key], 0)}%` }]} />
@@ -114,7 +124,7 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
 
           <View style={styles.blindSpotCard}>
             <View style={styles.blindSpotHeader}>
-              <CpuIcon width={16} height={16} color={colors.red.main} />
+              <TargetIcon width={16} height={16} color={colors.red.main} />
               <Text style={styles.blindSpotTitle}>BLIND SPOT — {weakest.label.toUpperCase()}</Text>
             </View>
 
@@ -211,17 +221,26 @@ const styles = StyleSheet.create({
   },
   metricGrid: {
     flex: 1,
-    gap: 8,
-  },
-  metricItem: {
     flexDirection: "row",
-    alignItems: "center",
+    flexWrap: "wrap",
     gap: 6,
   },
+  metricItem: {
+    width: "47%",
+    backgroundColor: colors.background.main,
+    borderRadius: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  metricTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 2,
+  },
   metricLabel: {
-    width: 52,
     color: colors.bodyText.main,
-    fontSize: 8,
+    fontSize: 7,
     letterSpacing: 0.5,
   },
   metricValue: {
@@ -230,11 +249,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   metricTrack: {
-    flex: 1,
-    height: 4,
+    height: 3,
     borderRadius: 2,
     backgroundColor: colors.border.main,
     overflow: "hidden",
+    marginTop: 4,
   },
   metricFill: {
     height: "100%",
