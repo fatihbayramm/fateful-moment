@@ -1,4 +1,5 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
 
 import RadarChart from "./RadarChart";
 import { colors } from "../../../../../constants/theme";
@@ -142,6 +143,10 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
 
             <Text style={styles.blindSpotText}>{dna.blindSpot}</Text>
           </View>
+
+          <TouchableOpacity style={styles.newScenarioButton} onPress={() => router.push("/scenarios")}>
+            <Text style={styles.newScenarioButtonText}>New Scenario</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -321,5 +326,19 @@ const styles = StyleSheet.create({
     color: colors.bodyText.main,
     fontSize: 10,
     lineHeight: 15,
+  },
+  newScenarioButton: {
+    alignSelf: "flex-end",
+    backgroundColor: colors.secondary.main,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.primary.main,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+  },
+  newScenarioButtonText: {
+    color: colors.primary.main,
+    fontSize: 12,
+    fontWeight: "bold",
   },
 });
