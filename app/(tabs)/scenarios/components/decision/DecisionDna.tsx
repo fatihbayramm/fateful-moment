@@ -75,7 +75,7 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
               <Text style={styles.archetypeTitle}>{dna.archetypeTitle.toUpperCase()}</Text>
 
               <View style={styles.quote}>
-                <Text style={styles.archetypeDescription}>{dna.archetypeDescription}</Text>
+                <Text style={styles.archetypeDescription}>"{dna.archetypeDescription}"</Text>
               </View>
             </View>
           </View>
@@ -171,8 +171,7 @@ const styles = StyleSheet.create({
   portrait: {
     width: 84,
     height: 84,
-    borderRadius: 10,
-    backgroundColor: colors.background.main,
+    borderRadius: 42,
   },
   archetypeBody: {
     flex: 1,
