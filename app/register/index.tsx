@@ -57,22 +57,31 @@ export default function RegisterScreen() {
     setError(null);
     setLoading(true);
 
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: email.trim(),
-      password,
-      options: {
-        data: { full_name: fullName.trim() },
-      },
-    });
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          data: { full_name: fullName.trim() },
+        },
+      });
 
-    setLoading(false);
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
 
-    if (signUpError) {
-      setError(signUpError.message);
-      return;
+      if (!data.user) {
+        setError("We could not create your account. Please try again.");
+        return;
+      }
+
+      router.replace("/scenarios");
+    } catch {
+      setError("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
     }
-
-    router.replace("/login");
   };
 
   return (
