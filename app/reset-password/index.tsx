@@ -9,65 +9,49 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
+
 import { colors } from "@/constants/theme";
 import { ROUTES } from "@/utils/routes";
 import { supabase } from "@/services/supabase";
-import BackButton from "@/components/common/BackButton";
-import EyeIcon from "@/assets/icons/eye.svg";
-import EyeOffIcon from "@/assets/icons/eye_2.svg";
 
-type FieldName = "email" | "password";
-type FieldErrors = Partial<Record<FieldName, string>>;
+import BackButton from "@/components/common/BackButton";
+import EmailIcon from "@/assets/icons/email.svg";
+
+type FieldErrors = Partial<Record<"email", string>>;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const validateFields = (values: Record<FieldName, string>): FieldErrors => {
-  const errors: FieldErrors = {};
-
-  if (!values.email.trim()) {
-    errors.email = "Please enter your email address.";
-  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
-    errors.email = "Please enter a valid email address.";
+const validateFields = (email: string): FieldErrors => {
+  if (!email.trim()) {
+    return { email: "Please enter your email address." };
   }
 
-  if (!values.password) {
-    errors.password = "Please enter your password.";
+  if (!EMAIL_PATTERN.test(email.trim())) {
+    return { email: "Please enter a valid email address." };
   }
 
-  return errors;
+  return {};
 };
 
 const mapSupabaseError = (message: string): FieldErrors => {
-  const lower = message.toLowerCase();
-
-  if (lower.includes("invalid login")) {
-    return { password: "Incorrect email or password." };
-  }
-
-  if (lower.includes("password")) {
-    return { password: message };
-  }
-
-  if (lower.includes("email")) {
+  if (message.toLowerCase().includes("email")) {
     return { email: message };
   }
 
   return {};
 };
 
-export default function LoginScreen() {
+export default function ResetPasswordScreen() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener("keyboardDidShow", () => setIsKeyboardVisible(true));
@@ -79,21 +63,25 @@ export default function LoginScreen() {
     };
   }, []);
 
-  const canSubmit = email.trim().length > 0 && password.length > 0 && !loading;
+  const canSubmit = email.trim().length > 0 && !loading;
 
-  const handleChange = (field: FieldName, value: string) => {
-    if (field === "email") setEmail(value);
-    if (field === "password") setPassword(value);
+  const handleChange = (value: string) => {
+    setEmail(value);
 
-    if (fieldErrors[field]) {
-      setFieldErrors((current) => ({ ...current, [field]: undefined }));
+    if (fieldErrors.email) {
+      setFieldErrors({});
+    }
+
+    if (successMessage) {
+      setSuccessMessage(null);
     }
   };
 
-  const handleSignIn = async () => {
+  const handleResetPassword = async () => {
     setError(null);
+    setSuccessMessage(null);
 
-    const nextFieldErrors = validateFields({ email, password });
+    const nextFieldErrors = validateFields(email);
     setFieldErrors(nextFieldErrors);
 
     if (Object.keys(nextFieldErrors).length > 0) {
@@ -103,29 +91,23 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: ROUTES.RESET_PASSWORD,
       });
 
-      if (signInError) {
-        const mapped = mapSupabaseError(signInError.message);
+      if (resetError) {
+        const mapped = mapSupabaseError(resetError.message);
 
         if (Object.keys(mapped).length > 0) {
           setFieldErrors(mapped);
         } else {
-          setError(signInError.message);
+          setError(resetError.message);
         }
 
         return;
       }
 
-      if (!data.user) {
-        setError("We could not sign you in. Please try again.");
-        return;
-      }
-
-      router.replace(ROUTES.SCENARIOS);
+      setSuccessMessage(`A reset link has been sent to ${email.trim()}.`);
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
@@ -154,100 +136,66 @@ export default function LoginScreen() {
         </View>
 
         <View style={styles.headerText}>
-          <Text style={styles.title}>Welcome to Fateful Moment</Text>
+          <Text style={styles.title}>Reset your password</Text>
 
-          <Text style={styles.subtitle}>Sign in with Email</Text>
+          <Text style={styles.subtitle}>Enter your email to receive a reset link.</Text>
         </View>
 
         <View style={styles.fields}>
           <View style={styles.field}>
-            <TextInput
-              style={[styles.input, loading && styles.inputDisabled, fieldErrors.email && styles.inputError]}
-              placeholder="Your email address"
-              placeholderTextColor={colors.bodyText.main}
-              value={email}
-              onChangeText={(value) => handleChange("email", value)}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              autoComplete="email"
-              editable={!loading}
-            />
-
-            {fieldErrors.email ? <Text style={styles.fieldError}>{fieldErrors.email}</Text> : null}
-          </View>
-
-          <View style={styles.field}>
             <View style={styles.inputWrapper}>
+              <EmailIcon width={18} height={18} style={styles.inputIcon} />
+
               <TextInput
                 style={[
                   styles.input,
-                  styles.inputWithToggle,
+                  styles.inputWithIcon,
                   loading && styles.inputDisabled,
-                  fieldErrors.password && styles.inputError,
+                  fieldErrors.email && styles.inputError,
                 ]}
-                placeholder="Your password"
+                placeholder="Your email address"
                 placeholderTextColor={colors.bodyText.main}
-                value={password}
-                onChangeText={(value) => handleChange("password", value)}
-                secureTextEntry={!isPasswordVisible}
+                value={email}
+                onChangeText={handleChange}
                 autoCapitalize="none"
-                autoComplete="current-password"
+                keyboardType="email-address"
+                autoComplete="email"
                 editable={!loading}
               />
-
-              <Pressable
-                style={styles.passwordToggle}
-                onPress={() => setIsPasswordVisible((current) => !current)}
-                hitSlop={8}
-              >
-                {isPasswordVisible ? (
-                  <EyeOffIcon width={18} height={18} color={colors.bodyText.main} />
-                ) : (
-                  <EyeIcon width={18} height={18} color={colors.bodyText.main} />
-                )}
-              </Pressable>
             </View>
 
-            {fieldErrors.password ? <Text style={styles.fieldError}>{fieldErrors.password}</Text> : null}
+            {fieldErrors.email ? <Text style={styles.fieldError}>{fieldErrors.email}</Text> : null}
           </View>
         </View>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
+        {successMessage ? <Text style={styles.success}>{successMessage}</Text> : null}
+
         <TouchableOpacity
           style={[styles.submit, !canSubmit && styles.submitDisabled]}
-          onPress={handleSignIn}
+          onPress={handleResetPassword}
           disabled={!canSubmit}
           activeOpacity={0.8}
         >
           {loading ? (
             <ActivityIndicator color={colors.primary.main} />
           ) : (
-            <Text style={[styles.submitText, !canSubmit && styles.submitTextDisabled]}>Sign in</Text>
+            <Text style={[styles.submitText, !canSubmit && styles.submitTextDisabled]}>Send Reset Link</Text>
           )}
         </TouchableOpacity>
 
-        <Text
-          style={[styles.forgotLink, loading && styles.linkDisabled]}
-          onPress={loading ? undefined : () => router.replace(ROUTES.RESET_PASSWORD)}
+        <TouchableOpacity
+          style={styles.footer}
+          onPress={loading ? undefined : () => router.replace(ROUTES.LOGIN)}
+          activeOpacity={0.8}
         >
-          Forgot password?
-        </Text>
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>No account yet?</Text>
-
-          <Text
-            style={[styles.footerLink, loading && styles.linkDisabled]}
-            onPress={loading ? undefined : () => router.replace(ROUTES.REGISTER)}
-          >
-            Sign up
-          </Text>
-        </View>
+          <Text style={[styles.footerText, loading && styles.linkDisabled]}>Back to Sign in</Text>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
 
       <View style={styles.back}>
-        <BackButton onPress={() => router.replace(ROUTES.REGISTER)} />
+        <BackButton onPress={() => router.replace(ROUTES.LOGIN)} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -296,7 +244,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subtitle: {
-    color: colors.bodyText.main,
+    color: colors.primary.main,
     fontSize: 14,
     textAlign: "center",
   },
@@ -312,15 +260,10 @@ const styles = StyleSheet.create({
     position: "relative",
     justifyContent: "center",
   },
-  inputWithToggle: {
-    paddingRight: 48,
-  },
-  passwordToggle: {
+  inputIcon: {
     position: "absolute",
-    right: 14,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
+    left: 14,
+    zIndex: 1,
   },
   input: {
     minHeight: 48,
@@ -332,6 +275,9 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     color: colors.text.main,
     fontSize: 14,
+  },
+  inputWithIcon: {
+    paddingLeft: 44,
   },
   inputError: {
     borderColor: colors.red.main,
@@ -347,6 +293,12 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 360,
     color: colors.red.main,
+    fontSize: 11,
+  },
+  success: {
+    width: "100%",
+    maxWidth: 360,
+    color: colors.primary.main,
     fontSize: 11,
   },
   submit: {
@@ -372,23 +324,12 @@ const styles = StyleSheet.create({
   submitTextDisabled: {
     color: colors.bodyText.main,
   },
-  forgotLink: {
-    color: colors.primary.main,
-    fontSize: 13,
-    fontWeight: "bold",
-  },
   footer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 6,
+    paddingVertical: 4,
   },
   footerText: {
-    color: colors.bodyText.main,
-    fontSize: 12,
-  },
-  footerLink: {
     color: colors.primary.main,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "bold",
   },
   linkDisabled: {

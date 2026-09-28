@@ -5,6 +5,8 @@ export const ROUTES = {
 
   REGISTER: "/register",
 
+  RESET_PASSWORD: "/reset-password",
+
   HOME: "/(tabs)",
 
   SCENARIOS: "/(tabs)/scenarios",
