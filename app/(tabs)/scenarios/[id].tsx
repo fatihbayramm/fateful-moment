@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
 import ScenarioOptions from "@/app/(tabs)/scenarios/components/scenario/ScenarioOptions";
 import DecisionDna from "@/app/(tabs)/scenarios/components/decision/DecisionDna";
 import BackButton from "@/components/common/BackButton";

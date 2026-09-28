@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { router } from "expo-router";
-
 import ScenarioCard from "@/app/(tabs)/scenarios/components/scenario/ScenarioCard";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { scenarios } from "@/data/scenarios";

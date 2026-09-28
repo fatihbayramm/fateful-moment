@@ -1,8 +1,6 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
-
 import { colors } from "@/constants/theme";
-
 import EmailIcon from "@/assets/icons/email.svg";
 import AppleIcon from "@/assets/icons/apple.svg";
 import GoogleIcon from "@/assets/icons/google.svg";

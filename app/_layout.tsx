@@ -3,7 +3,6 @@ import { NavigationBar } from "expo-navigation-bar";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { colors } from "@/constants/theme";
 
 export default function RootLayout() {

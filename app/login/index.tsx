@@ -14,10 +14,8 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
-
 import { colors } from "@/constants/theme";
 import { supabase } from "@/services/supabase";
-
 import BackButton from "@/components/common/BackButton";
 import EyeIcon from "@/assets/icons/eye.svg";
 import EyeOffIcon from "@/assets/icons/eye_2.svg";
@@ -228,10 +226,7 @@ export default function LoginScreen() {
           )}
         </TouchableOpacity>
 
-        <Text
-          style={[styles.forgotLink, loading && styles.linkDisabled]}
-          onPress={loading ? undefined : () => {}}
-        >
+        <Text style={[styles.forgotLink, loading && styles.linkDisabled]} onPress={loading ? undefined : () => {}}>
           Forgot password?
         </Text>
 

@@ -1,12 +1,8 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
-
 import RadarChart from "@/app/(tabs)/scenarios/components/decision/RadarChart";
 import { colors } from "@/constants/theme";
 import type { DecisionDna as DecisionDnaType, Metrics } from "@/data/scenarios";
-
-type MetricKey = keyof Metrics;
-
 import DnaIcon from "@/assets/icons/dna.svg";
 import ActivityIcon from "@/assets/icons/activity.svg";
 import TargetIcon from "@/assets/icons/target.svg";
@@ -16,6 +12,8 @@ import RiskIcon from "@/assets/icons/risk.svg";
 import SettingsIcon from "@/assets/icons/settings_2.svg";
 import HeartIcon from "@/assets/icons/heart.svg";
 import BalanceIcon from "@/assets/icons/balance.svg";
+
+type MetricKey = keyof Metrics;
 
 const portraitMap: Record<string, any> = {
   "asiri-analist.png": require("@/assets/images/dna-portraits/asiri-analist.png"),

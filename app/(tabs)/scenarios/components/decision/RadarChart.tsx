@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Line, Polygon, Text as SvgText } from "react-native-svg";
-
 import { colors } from "@/constants/theme";
 import type { Metrics } from "@/data/scenarios";
 
@@ -27,7 +26,11 @@ const toPoint = (index: number, ratio: number) => {
   };
 };
 
-const toPoints = (ratio: number) => axes.map((_, index) => toPoint(index, ratio)).map((p) => `${p.x},${p.y}`).join(" ");
+const toPoints = (ratio: number) =>
+  axes
+    .map((_, index) => toPoint(index, ratio))
+    .map((p) => `${p.x},${p.y}`)
+    .join(" ");
 
 const toDataPoints = (metrics: Metrics) =>
   axes
@@ -40,13 +43,7 @@ export default function RadarChart({ metrics }: { metrics: Metrics }) {
     <View style={styles.container}>
       <Svg width={SIZE} height={SIZE}>
         {LEVELS.map((level) => (
-          <Polygon
-            key={level}
-            points={toPoints(level)}
-            fill="none"
-            stroke={colors.border.main}
-            strokeWidth={1}
-          />
+          <Polygon key={level} points={toPoints(level)} fill="none" stroke={colors.border.main} strokeWidth={1} />
         ))}
 
         {axes.map((axis, index) => {
@@ -65,7 +62,12 @@ export default function RadarChart({ metrics }: { metrics: Metrics }) {
           );
         })}
 
-        <Polygon points={toDataPoints(metrics)} fill="rgba(0, 211, 243, 0.25)" stroke={colors.primary.main} strokeWidth={2} />
+        <Polygon
+          points={toDataPoints(metrics)}
+          fill="rgba(0, 211, 243, 0.25)"
+          stroke={colors.primary.main}
+          strokeWidth={2}
+        />
 
         {axes.map((axis, index) => {
           const point = toPoint(index, Math.max(metrics[axis.key], 0) / 100);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
-
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
 import { supabase } from "@/services/supabase";
@@ -29,10 +28,8 @@ export default function SettingsScreen() {
     };
   }, []);
 
-  const isDisabled = isLoggingOut || !isSignedIn;
-
   const handleLogOut = async () => {
-    if (isDisabled) {
+    if (isLoggingOut || !isSignedIn) {
       return;
     }
 
@@ -61,18 +58,28 @@ export default function SettingsScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Account</Text>
 
-        <TouchableOpacity
-          style={[styles.button, isDisabled && styles.buttonDisabled]}
-          onPress={handleLogOut}
-          disabled={isDisabled}
-          activeOpacity={0.8}
-        >
-          {isLoggingOut ? (
-            <ActivityIndicator color={colors.red.main} />
-          ) : (
-            <Text style={[styles.buttonText, !isSignedIn && styles.buttonTextDisabled]}>Log out</Text>
-          )}
-        </TouchableOpacity>
+        {isSignedIn ? (
+          <TouchableOpacity
+            style={[styles.button, styles.logoutButton, isLoggingOut && styles.buttonDisabled]}
+            onPress={handleLogOut}
+            disabled={isLoggingOut}
+            activeOpacity={0.8}
+          >
+            {isLoggingOut ? (
+              <ActivityIndicator color={colors.red.main} />
+            ) : (
+              <Text style={styles.logoutButtonText}>Log out</Text>
+            )}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={[styles.button, styles.loginButton]}
+            onPress={() => router.replace("/")}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.loginButtonText}>Log in</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -117,22 +124,30 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "flex-start",
-    backgroundColor: "rgba(251, 44, 54, 0.1)",
     borderWidth: 1,
-    borderColor: colors.red.main,
     borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 20,
   },
-  buttonText: {
+  logoutButton: {
+    backgroundColor: "rgba(251, 44, 54, 0.1)",
+    borderColor: colors.red.main,
+  },
+  logoutButtonText: {
     color: colors.red.main,
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  loginButton: {
+    backgroundColor: "rgba(0, 211, 243, 0.1)",
+    borderColor: colors.primary.main,
+  },
+  loginButtonText: {
+    color: colors.primary.main,
     fontSize: 12,
     fontWeight: "bold",
   },
   buttonDisabled: {
     opacity: 0.5,
-  },
-  buttonTextDisabled: {
-    color: colors.bodyText.main,
   },
 });
