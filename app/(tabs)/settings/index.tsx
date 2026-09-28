@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
@@ -8,9 +8,31 @@ import { supabase } from "../../../services/supabase";
 
 export default function SettingsScreen() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (isMounted) {
+        setIsSignedIn(Boolean(data.session));
+      }
+    });
+
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsSignedIn(Boolean(session));
+    });
+
+    return () => {
+      isMounted = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
+
+  const isDisabled = isLoggingOut || !isSignedIn;
 
   const handleLogOut = async () => {
-    if (isLoggingOut) {
+    if (isDisabled) {
       return;
     }
 
@@ -40,15 +62,15 @@ export default function SettingsScreen() {
         <Text style={styles.cardTitle}>Account</Text>
 
         <TouchableOpacity
-          style={[styles.button, isLoggingOut && styles.buttonDisabled]}
+          style={[styles.button, isDisabled && styles.buttonDisabled]}
           onPress={handleLogOut}
-          disabled={isLoggingOut}
+          disabled={isDisabled}
           activeOpacity={0.8}
         >
           {isLoggingOut ? (
             <ActivityIndicator color={colors.red.main} />
           ) : (
-            <Text style={styles.buttonText}>Log out</Text>
+            <Text style={[styles.buttonText, !isSignedIn && styles.buttonTextDisabled]}>Log out</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -109,5 +131,8 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.5,
+  },
+  buttonTextDisabled: {
+    color: colors.bodyText.main,
   },
 });
