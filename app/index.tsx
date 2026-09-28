@@ -26,6 +26,10 @@ export default function WelcomeScreen() {
           <Text style={styles.primaryButtonText}>Continue with Email</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.guestButton} onPress={() => router.replace("/scenarios")}>
+          <Text style={styles.guestButtonText}>Continue without creating an account</Text>
+        </TouchableOpacity>
+
         <View style={styles.divider}>
           <View style={styles.dividerLine} />
 
@@ -115,6 +119,16 @@ const styles = StyleSheet.create({
   primaryButtonText: {
     color: colors.primary.main,
     fontSize: 15,
+    fontWeight: "bold",
+  },
+  guestButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+  },
+  guestButtonText: {
+    color: colors.primary.main,
+    fontSize: 13,
     fontWeight: "bold",
   },
   divider: {
