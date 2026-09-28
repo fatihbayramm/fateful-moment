@@ -15,6 +15,7 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
+          orientation: "landscape",
           contentStyle: {
             backgroundColor: colors.background.main,
           },
@@ -24,6 +25,23 @@ export default function RootLayout() {
           name="index"
           options={{
             headerShown: false,
+            orientation: "portrait",
+          }}
+        />
+
+        <Stack.Screen
+          name="register"
+          options={{
+            headerShown: false,
+            orientation: "portrait",
+          }}
+        />
+
+        <Stack.Screen
+          name="login"
+          options={{
+            headerShown: false,
+            orientation: "portrait",
           }}
         />
 
@@ -31,6 +49,7 @@ export default function RootLayout() {
           name="(tabs)"
           options={{
             headerShown: false,
+            orientation: "landscape",
           }}
         />
       </Stack>

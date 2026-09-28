@@ -55,20 +55,17 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.brand}>
-        <View style={styles.logoRing}>
-          <DnaIcon width={48} height={48} color={colors.primary.main} />
-        </View>
-
-        <Text style={styles.title}>Create your Fateful Moment Account</Text>
-      </View>
-
       <ScrollView
-        style={styles.form}
-        contentContainerStyle={styles.formContent}
+        contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
+        <View style={styles.logoRing}>
+          <DnaIcon width={56} height={56} color={colors.primary.main} />
+        </View>
+
+        <Text style={styles.title}>Create your Fateful Moment Account</Text>
+
         <View style={styles.fields}>
           <TextInput
             style={[styles.input, loading && styles.inputDisabled]}
@@ -154,12 +151,7 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 40,
     backgroundColor: colors.background.main,
-    paddingHorizontal: 40,
-    paddingVertical: 20,
   },
   back: {
     position: "absolute",
@@ -167,16 +159,18 @@ const styles = StyleSheet.create({
     left: 20,
     zIndex: 1,
   },
-  brand: {
-    flex: 1,
+  content: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
+    gap: 22,
+    paddingHorizontal: 24,
+    paddingVertical: 32,
   },
   logoRing: {
-    width: 132,
-    height: 132,
-    borderRadius: 66,
+    width: 140,
+    height: 140,
+    borderRadius: 70,
     borderWidth: 3,
     borderColor: colors.primary.main,
     alignItems: "center",
@@ -184,22 +178,13 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text.main,
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
   },
-  form: {
-    flex: 1,
-  },
-  formContent: {
-    flexGrow: 1,
-    width: "100%",
-    maxWidth: 420,
-    alignSelf: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-  },
   fields: {
+    width: "100%",
+    maxWidth: 360,
     gap: 10,
   },
   input: {
@@ -217,7 +202,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   rules: {
-    marginTop: 12,
+    width: "100%",
+    maxWidth: 360,
     gap: 6,
   },
   rule: {
@@ -233,12 +219,14 @@ const styles = StyleSheet.create({
     color: colors.text.main,
   },
   error: {
-    marginTop: 10,
+    width: "100%",
+    maxWidth: 360,
     color: colors.red.main,
     fontSize: 11,
   },
   submit: {
-    marginTop: 14,
+    width: "100%",
+    maxWidth: 360,
     minHeight: 48,
     alignItems: "center",
     justifyContent: "center",
@@ -260,7 +248,6 @@ const styles = StyleSheet.create({
     color: colors.bodyText.main,
   },
   footer: {
-    marginTop: 12,
     flexDirection: "row",
     justifyContent: "center",
     gap: 6,

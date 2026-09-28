@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
 import { colors } from "../constants/theme";
@@ -10,16 +10,18 @@ import GoogleIcon from "../assets/icons/google.svg";
 
 export default function WelcomeScreen() {
   return (
-    <View style={styles.container}>
-      <View style={styles.brand}>
-        <View style={styles.logoRing}>
-          <DnaIcon width={56} height={56} color={colors.primary.main} />
-        </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.logoRing}>
+        <DnaIcon width={72} height={72} color={colors.primary.main} />
+      </View>
 
-        <View style={styles.brandText}>
-          <Text style={styles.title}>Welcome to Fateful Moment</Text>
-          <Text style={styles.subtitle}>Sign in to continue your journey</Text>
-        </View>
+      <View style={styles.headerText}>
+        <Text style={styles.title}>Welcome to Fateful Moment</Text>
+        <Text style={styles.subtitle}>Sign in to continue your journey</Text>
       </View>
 
       <View style={styles.actions}>
@@ -55,40 +57,37 @@ export default function WelcomeScreen() {
           <Text style={styles.termsHighlight}>Privacy Policy</Text>.
         </Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 48,
     backgroundColor: colors.background.main,
-    paddingHorizontal: 48,
-    paddingVertical: 24,
   },
-  brand: {
-    flex: 1,
+  content: {
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 24,
+    gap: 28,
+    paddingHorizontal: 24,
+    paddingVertical: 32,
   },
   logoRing: {
-    width: 148,
-    height: 148,
-    borderRadius: 74,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     alignItems: "center",
     justifyContent: "center",
   },
-  brandText: {
+  headerText: {
     alignItems: "center",
-    gap: 6,
+    gap: 8,
   },
   title: {
     color: colors.text.main,
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -98,11 +97,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   actions: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 420,
-    alignSelf: "stretch",
-    paddingVertical: 8,
+    width: "100%",
+    maxWidth: 360,
+    gap: 10,
   },
   primaryButton: {
     flexDirection: "row",
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.primary.main,
     borderRadius: 12,
-    paddingVertical: 14,
+    paddingVertical: 15,
   },
   primaryButtonText: {
     color: colors.primary.main,
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    marginVertical: 16,
+    marginVertical: 6,
   },
   dividerLine: {
     flex: 1,
@@ -144,8 +141,7 @@ const styles = StyleSheet.create({
     gap: 10,
     backgroundColor: colors.secondary.main,
     borderRadius: 12,
-    paddingVertical: 14,
-    marginBottom: 10,
+    paddingVertical: 15,
   },
   secondaryButtonText: {
     color: colors.text.main,
@@ -153,10 +149,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   terms: {
-    marginTop: 18,
+    marginTop: 12,
     color: colors.bodyText.main,
     fontSize: 11,
-    lineHeight: 17,
+    lineHeight: 18,
     textAlign: "center",
   },
   termsHighlight: {
