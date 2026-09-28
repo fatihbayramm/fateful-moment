@@ -27,11 +27,55 @@ const passwordRules = [
   { label: "Must contain at least 1 digit", test: (value: string) => /[0-9]/.test(value) },
 ];
 
+type FieldName = "fullName" | "email" | "password";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const validateFields = (values: Record<FieldName, string>): FieldErrors => {
+  const errors: FieldErrors = {};
+
+  if (!values.fullName.trim()) {
+    errors.fullName = "Please enter your full name.";
+  }
+
+  if (!values.email.trim()) {
+    errors.email = "Please enter your email address.";
+  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
+    errors.email = "Please enter a valid email address.";
+  }
+
+  if (!values.password) {
+    errors.password = "Please enter a password.";
+  }
+
+  return errors;
+};
+
+const mapSupabaseError = (message: string): FieldErrors => {
+  const lower = message.toLowerCase();
+
+  if (lower.includes("already registered") || lower.includes("already been registered")) {
+    return { email: "An account with this email already exists." };
+  }
+
+  if (lower.includes("password")) {
+    return { password: message };
+  }
+
+  if (lower.includes("email")) {
+    return { email: message };
+  }
+
+  return {};
+};
+
 export default function RegisterScreen() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [loading, setLoading] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
@@ -53,8 +97,26 @@ export default function RegisterScreen() {
   const isPasswordValid = rules.every((rule) => rule.valid);
   const canSubmit = fullName.trim().length > 0 && email.trim().length > 0 && isPasswordValid && !loading;
 
+  const handleChange = (field: FieldName, value: string) => {
+    if (field === "fullName") setFullName(value);
+    if (field === "email") setEmail(value);
+    if (field === "password") setPassword(value);
+
+    if (fieldErrors[field]) {
+      setFieldErrors((current) => ({ ...current, [field]: undefined }));
+    }
+  };
+
   const handleSignUp = async () => {
     setError(null);
+
+    const nextFieldErrors = validateFields({ fullName, email, password });
+    setFieldErrors(nextFieldErrors);
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -67,7 +129,14 @@ export default function RegisterScreen() {
       });
 
       if (signUpError) {
-        setError(signUpError.message);
+        const mapped = mapSupabaseError(signUpError.message);
+
+        if (Object.keys(mapped).length > 0) {
+          setFieldErrors(mapped);
+        } else {
+          setError(signUpError.message);
+        }
+
         return;
       }
 
@@ -107,38 +176,50 @@ export default function RegisterScreen() {
         <Text style={styles.title}>Create your Fateful Moment Account</Text>
 
         <View style={styles.fields}>
-          <TextInput
-            style={[styles.input, loading && styles.inputDisabled]}
-            placeholder="Full name"
-            placeholderTextColor={colors.bodyText.main}
-            value={fullName}
-            onChangeText={setFullName}
-            autoCapitalize="words"
-            editable={!loading}
-          />
+          <View style={styles.field}>
+            <TextInput
+              style={[styles.input, loading && styles.inputDisabled, fieldErrors.fullName && styles.inputError]}
+              placeholder="Full name"
+              placeholderTextColor={colors.bodyText.main}
+              value={fullName}
+              onChangeText={(value) => handleChange("fullName", value)}
+              autoCapitalize="words"
+              editable={!loading}
+            />
 
-          <TextInput
-            style={[styles.input, loading && styles.inputDisabled]}
-            placeholder="Email"
-            placeholderTextColor={colors.bodyText.main}
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            autoComplete="email"
-            editable={!loading}
-          />
+            {fieldErrors.fullName ? <Text style={styles.fieldError}>{fieldErrors.fullName}</Text> : null}
+          </View>
 
-          <TextInput
-            style={[styles.input, loading && styles.inputDisabled]}
-            placeholder="Your password"
-            placeholderTextColor={colors.bodyText.main}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoCapitalize="none"
-            editable={!loading}
-          />
+          <View style={styles.field}>
+            <TextInput
+              style={[styles.input, loading && styles.inputDisabled, fieldErrors.email && styles.inputError]}
+              placeholder="Email"
+              placeholderTextColor={colors.bodyText.main}
+              value={email}
+              onChangeText={(value) => handleChange("email", value)}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoComplete="email"
+              editable={!loading}
+            />
+
+            {fieldErrors.email ? <Text style={styles.fieldError}>{fieldErrors.email}</Text> : null}
+          </View>
+
+          <View style={styles.field}>
+            <TextInput
+              style={[styles.input, loading && styles.inputDisabled, fieldErrors.password && styles.inputError]}
+              placeholder="Your password"
+              placeholderTextColor={colors.bodyText.main}
+              value={password}
+              onChangeText={(value) => handleChange("password", value)}
+              secureTextEntry
+              autoCapitalize="none"
+              editable={!loading}
+            />
+
+            {fieldErrors.password ? <Text style={styles.fieldError}>{fieldErrors.password}</Text> : null}
+          </View>
         </View>
 
         <View style={styles.rules}>
@@ -226,6 +307,16 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 360,
     gap: 10,
+  },
+  field: {
+    gap: 4,
+  },
+  inputError: {
+    borderColor: colors.red.main,
+  },
+  fieldError: {
+    color: colors.red.main,
+    fontSize: 10,
   },
   input: {
     minHeight: 48,
