@@ -1,12 +1,20 @@
 import { useMemo, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { router } from "expo-router";
 
 import { colors } from "../../constants/theme";
 import { supabase } from "../../services/supabase";
 
 import BackButton from "../../components/common/BackButton";
-import DnaIcon from "../../assets/icons/dna.svg";
 import CheckCircleIcon from "../../assets/icons/check-circle.svg";
 
 const passwordRules = [
@@ -25,7 +33,7 @@ export default function RegisterScreen() {
 
   const rules = useMemo(
     () => passwordRules.map((rule) => ({ label: rule.label, valid: rule.test(password) })),
-    [password]
+    [password],
   );
 
   const isPasswordValid = rules.every((rule) => rule.valid);
@@ -61,7 +69,7 @@ export default function RegisterScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.logoRing}>
-          <DnaIcon width={56} height={56} color={colors.primary.main} />
+          <Image source={require("../../assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
         </View>
 
         <Text style={styles.title}>Create your Fateful Moment Account</Text>
@@ -104,11 +112,7 @@ export default function RegisterScreen() {
         <View style={styles.rules}>
           {rules.map((rule) => (
             <View key={rule.label} style={styles.rule}>
-              <CheckCircleIcon
-                width={14}
-                height={14}
-                color={rule.valid ? colors.primary.main : colors.bodyText.main}
-              />
+              <CheckCircleIcon width={14} height={14} color={rule.valid ? colors.primary.main : colors.bodyText.main} />
 
               <Text style={[styles.ruleLabel, rule.valid && styles.ruleLabelValid]}>{rule.label}</Text>
             </View>
@@ -168,13 +172,17 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
   },
   logoRing: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    borderWidth: 3,
-    borderColor: colors.primary.main,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    borderColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
+  },
+  logo: {
+    width: "100%",
+    height: "100%",
   },
   title: {
     color: colors.text.main,

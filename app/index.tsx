@@ -1,22 +1,17 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
 import { colors } from "../constants/theme";
 
-import DnaIcon from "../assets/icons/dna.svg";
 import EmailIcon from "../assets/icons/email.svg";
 import AppleIcon from "../assets/icons/apple.svg";
 import GoogleIcon from "../assets/icons/google.svg";
 
 export default function WelcomeScreen() {
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      showsVerticalScrollIndicator={false}
-    >
+    <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
       <View style={styles.logoRing}>
-        <DnaIcon width={72} height={72} color={colors.primary.main} />
+        <Image source={require("../assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
       </View>
 
       <View style={styles.headerText}>
@@ -52,8 +47,7 @@ export default function WelcomeScreen() {
         </TouchableOpacity>
 
         <Text style={styles.terms}>
-          By continuing you agree to the{" "}
-          <Text style={styles.termsHighlight}>Terms of Use</Text> and{" "}
+          By continuing you agree to the <Text style={styles.termsHighlight}>Terms of Use</Text> and{" "}
           <Text style={styles.termsHighlight}>Privacy Policy</Text>.
         </Text>
       </View>
@@ -78,8 +72,14 @@ const styles = StyleSheet.create({
     width: 160,
     height: 160,
     borderRadius: 80,
+    borderColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
+  },
+  logo: {
+    width: "100%",
+    height: "100%",
   },
   headerText: {
     alignItems: "center",
