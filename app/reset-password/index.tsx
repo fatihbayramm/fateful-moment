@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -12,20 +13,38 @@ import {
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as Linking from "expo-linking";
 import { router } from "expo-router";
 
 import { colors } from "@/constants/theme";
-import { ROUTES } from "@/utils/routes";
-import { supabase } from "@/services/supabase";
+import { createDeepLink, ROUTES } from "@/utils/routes";
+import { signInFromDeepLink, supabase } from "@/services/supabase";
+import { useKeyboardVisible } from "@/hooks/useKeyboardVisible";
 
 import BackButton from "@/components/common/BackButton";
+import CheckCircleIcon from "@/assets/icons/check-circle.svg";
 import EmailIcon from "@/assets/icons/email.svg";
+import EyeIcon from "@/assets/icons/eye.svg";
+import EyeOffIcon from "@/assets/icons/eye_2.svg";
 
-type FieldErrors = Partial<Record<"email", string>>;
+const passwordRules = [
+  { label: "Must be at least 8 characters long", test: (value: string) => value.length >= 8 },
+  { label: "Must contain at least 1 uppercase letter", test: (value: string) => /[A-Z]/.test(value) },
+  { label: "Must contain at least 1 lowercase letter", test: (value: string) => /[a-z]/.test(value) },
+  { label: "Must contain at least 1 digit", test: (value: string) => /[0-9]/.test(value) },
+];
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const validateFields = (email: string): FieldErrors => {
+type Stage = "request" | "update";
+
+type RequestField = "email";
+type UpdateField = "password" | "confirmPassword";
+
+type RequestErrors = Partial<Record<RequestField, string>>;
+type UpdateErrors = Partial<Record<UpdateField, string>>;
+
+const validateEmail = (email: string): RequestErrors => {
   if (!email.trim()) {
     return { email: "Please enter your email address." };
   }
@@ -37,39 +56,89 @@ const validateFields = (email: string): FieldErrors => {
   return {};
 };
 
-const mapSupabaseError = (message: string): FieldErrors => {
-  if (message.toLowerCase().includes("email")) {
-    return { email: message };
+const validatePasswords = (password: string, confirmPassword: string): UpdateErrors => {
+  const errors: UpdateErrors = {};
+
+  if (!password) {
+    errors.password = "Please enter a new password.";
+  } else if (!passwordRules.every((rule) => rule.test(password))) {
+    errors.password = "Your new password does not meet the requirements below.";
   }
 
-  return {};
+  if (!confirmPassword) {
+    errors.confirmPassword = "Please confirm your new password.";
+  } else if (confirmPassword !== password) {
+    errors.confirmPassword = "Passwords do not match.";
+  }
+
+  return errors;
 };
 
 export default function ResetPasswordScreen() {
+  const [stage, setStage] = useState<Stage>("request");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [requestFieldErrors, setRequestFieldErrors] = useState<RequestErrors>({});
+  const [updateFieldErrors, setUpdateFieldErrors] = useState<UpdateErrors>({});
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [isVerifyingLink, setIsVerifyingLink] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const isKeyboardVisible = useKeyboardVisible();
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setIsKeyboardVisible(true));
-    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setIsKeyboardVisible(false));
+  const handledUrl = useRef<string | null>(null);
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
+  const handleUrl = useCallback(async (url: string | null) => {
+    if (!url || handledUrl.current === url) {
+      return;
+    }
+
+    handledUrl.current = url;
+    setIsVerifyingLink(true);
+
+    const result = await signInFromDeepLink(url);
+
+    setIsVerifyingLink(false);
+
+    if (result.status === "ignore") {
+      handledUrl.current = null;
+      return;
+    }
+
+    if (result.status === "error") {
+      setStage("request");
+      setError(result.message);
+      return;
+    }
+
+    setStage("update");
   }, []);
 
-  const canSubmit = email.trim().length > 0 && !loading;
+  useEffect(() => {
+    Linking.getInitialURL().then(handleUrl);
 
-  const handleChange = (value: string) => {
+    const subscription = Linking.addEventListener("url", ({ url }) => handleUrl(url));
+
+    return () => subscription.remove();
+  }, [handleUrl]);
+
+  const rules = useMemo(
+    () => passwordRules.map((rule) => ({ label: rule.label, valid: rule.test(password) })),
+    [password],
+  );
+
+  const isBusy = loading || isVerifyingLink;
+
+  const canSubmitEmail = email.trim().length > 0 && !isBusy;
+  const canSubmitPassword = password.length > 0 && confirmPassword.length > 0 && !isBusy;
+
+  const handleChangeEmail = (value: string) => {
     setEmail(value);
 
-    if (fieldErrors.email) {
-      setFieldErrors({});
+    if (requestFieldErrors.email) {
+      setRequestFieldErrors({});
     }
 
     if (successMessage) {
@@ -77,12 +146,21 @@ export default function ResetPasswordScreen() {
     }
   };
 
-  const handleResetPassword = async () => {
+  const handleChangePassword = (field: UpdateField, value: string) => {
+    if (field === "password") setPassword(value);
+    if (field === "confirmPassword") setConfirmPassword(value);
+
+    if (updateFieldErrors[field]) {
+      setUpdateFieldErrors((current) => ({ ...current, [field]: undefined }));
+    }
+  };
+
+  const handleSendResetLink = async () => {
     setError(null);
     setSuccessMessage(null);
 
-    const nextFieldErrors = validateFields(email);
-    setFieldErrors(nextFieldErrors);
+    const nextFieldErrors = validateEmail(email);
+    setRequestFieldErrors(nextFieldErrors);
 
     if (Object.keys(nextFieldErrors).length > 0) {
       return;
@@ -92,14 +170,15 @@ export default function ResetPasswordScreen() {
 
     try {
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: ROUTES.RESET_PASSWORD,
+        redirectTo: createDeepLink(ROUTES.RESET_PASSWORD),
       });
 
       if (resetError) {
-        const mapped = mapSupabaseError(resetError.message);
+        const lower = resetError.message.toLowerCase();
+        const message = lower.includes("email") ? resetError.message : null;
 
-        if (Object.keys(mapped).length > 0) {
-          setFieldErrors(mapped);
+        if (message) {
+          setRequestFieldErrors({ email: message });
         } else {
           setError(resetError.message);
         }
@@ -107,7 +186,43 @@ export default function ResetPasswordScreen() {
         return;
       }
 
-      setSuccessMessage(`A reset link has been sent to ${email.trim()}.`);
+      setSuccessMessage(`A reset link has been sent to ${email.trim()}. Open it to choose a new password.`);
+    } catch {
+      setError("Something went wrong. Please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    setError(null);
+
+    const nextFieldErrors = validatePasswords(password, confirmPassword);
+    setUpdateFieldErrors(nextFieldErrors);
+
+    if (Object.keys(nextFieldErrors).length > 0) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({ password });
+
+      if (updateError) {
+        const lower = updateError.message.toLowerCase();
+        const message = lower.includes("password") ? updateError.message : null;
+
+        if (message) {
+          setUpdateFieldErrors({ password: message });
+        } else {
+          setError(updateError.message);
+        }
+
+        return;
+      }
+
+      router.replace(ROUTES.SCENARIOS);
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
@@ -136,61 +251,162 @@ export default function ResetPasswordScreen() {
         </View>
 
         <View style={styles.headerText}>
-          <Text style={styles.title}>Reset your password</Text>
+          <Text style={styles.title}>{stage === "request" ? "Reset your password" : "Choose a new password"}</Text>
 
-          <Text style={styles.subtitle}>Enter your email to receive a reset link.</Text>
+          <Text style={styles.subtitle}>
+            {stage === "request"
+              ? "Enter your email to receive a reset link."
+              : "Your new password has to meet the requirements below."}
+          </Text>
         </View>
 
-        <View style={styles.fields}>
-          <View style={styles.field}>
-            <View style={styles.inputWrapper}>
-              <EmailIcon width={18} height={18} style={styles.inputIcon} />
+        {isVerifyingLink ? (
+          <View style={styles.verifying}>
+            <ActivityIndicator color={colors.primary.main} />
 
+            <Text style={styles.verifyingText}>Verifying your reset link...</Text>
+          </View>
+        ) : null}
+
+        {stage === "request" ? (
+          <View style={styles.fields}>
+            <View style={styles.field}>
+              <View style={styles.inputWrapper}>
+                <EmailIcon width={18} height={18} style={styles.inputIcon} />
+
+                <TextInput
+                  style={[
+                    styles.input,
+                    styles.inputWithIcon,
+                    isBusy && styles.inputDisabled,
+                    requestFieldErrors.email && styles.inputError,
+                  ]}
+                  placeholder="Your email address"
+                  placeholderTextColor={colors.bodyText.main}
+                  value={email}
+                  onChangeText={handleChangeEmail}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  autoComplete="email"
+                  editable={!isBusy}
+                />
+              </View>
+
+              {requestFieldErrors.email ? (
+                <Text style={styles.fieldError}>{requestFieldErrors.email}</Text>
+              ) : null}
+            </View>
+          </View>
+        ) : (
+          <View style={styles.fields}>
+            <View style={styles.field}>
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    styles.inputWithToggle,
+                    isBusy && styles.inputDisabled,
+                    updateFieldErrors.password && styles.inputError,
+                  ]}
+                  placeholder="New password"
+                  placeholderTextColor={colors.bodyText.main}
+                  value={password}
+                  onChangeText={(value) => handleChangePassword("password", value)}
+                  secureTextEntry={!isPasswordVisible}
+                  autoCapitalize="none"
+                  editable={!isBusy}
+                />
+
+                <Pressable
+                  style={styles.passwordToggle}
+                  onPress={() => setIsPasswordVisible((current) => !current)}
+                  hitSlop={8}
+                >
+                  {isPasswordVisible ? (
+                    <EyeOffIcon width={18} height={18} color={colors.bodyText.main} />
+                  ) : (
+                    <EyeIcon width={18} height={18} color={colors.bodyText.main} />
+                  )}
+                </Pressable>
+              </View>
+
+              {updateFieldErrors.password ? (
+                <Text style={styles.fieldError}>{updateFieldErrors.password}</Text>
+              ) : null}
+            </View>
+
+            <View style={styles.field}>
               <TextInput
                 style={[
                   styles.input,
-                  styles.inputWithIcon,
-                  loading && styles.inputDisabled,
-                  fieldErrors.email && styles.inputError,
+                  isBusy && styles.inputDisabled,
+                  updateFieldErrors.confirmPassword && styles.inputError,
                 ]}
-                placeholder="Your email address"
+                placeholder="Confirm new password"
                 placeholderTextColor={colors.bodyText.main}
-                value={email}
-                onChangeText={handleChange}
+                value={confirmPassword}
+                onChangeText={(value) => handleChangePassword("confirmPassword", value)}
+                secureTextEntry={!isPasswordVisible}
                 autoCapitalize="none"
-                keyboardType="email-address"
-                autoComplete="email"
-                editable={!loading}
+                editable={!isBusy}
               />
-            </View>
 
-            {fieldErrors.email ? <Text style={styles.fieldError}>{fieldErrors.email}</Text> : null}
+              {updateFieldErrors.confirmPassword ? (
+                <Text style={styles.fieldError}>{updateFieldErrors.confirmPassword}</Text>
+              ) : null}
+            </View>
           </View>
-        </View>
+        )}
+
+        {stage === "update" ? (
+          <View style={styles.rules}>
+            {rules.map((rule) => (
+              <View key={rule.label} style={styles.rule}>
+                <CheckCircleIcon
+                  width={14}
+                  height={14}
+                  color={rule.valid ? colors.primary.main : colors.bodyText.main}
+                />
+
+                <Text style={[styles.ruleLabel, rule.valid && styles.ruleLabelValid]}>{rule.label}</Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
         {successMessage ? <Text style={styles.success}>{successMessage}</Text> : null}
 
         <TouchableOpacity
-          style={[styles.submit, !canSubmit && styles.submitDisabled]}
-          onPress={handleResetPassword}
-          disabled={!canSubmit}
+          style={[
+            styles.submit,
+            (stage === "request" ? !canSubmitEmail : !canSubmitPassword) && styles.submitDisabled,
+          ]}
+          onPress={stage === "request" ? handleSendResetLink : handleUpdatePassword}
+          disabled={stage === "request" ? !canSubmitEmail : !canSubmitPassword}
           activeOpacity={0.8}
         >
-          {loading ? (
+          {loading || isVerifyingLink ? (
             <ActivityIndicator color={colors.primary.main} />
           ) : (
-            <Text style={[styles.submitText, !canSubmit && styles.submitTextDisabled]}>Send Reset Link</Text>
+            <Text
+              style={[
+                styles.submitText,
+                (stage === "request" ? !canSubmitEmail : !canSubmitPassword) && styles.submitTextDisabled,
+              ]}
+            >
+              {stage === "request" ? "Send Reset Link" : "Update Password"}
+            </Text>
           )}
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.footer}
-          onPress={loading ? undefined : () => router.replace(ROUTES.LOGIN)}
+          onPress={isBusy ? undefined : () => router.replace(ROUTES.LOGIN)}
           activeOpacity={0.8}
         >
-          <Text style={[styles.footerText, loading && styles.linkDisabled]}>Back to Sign in</Text>
+          <Text style={[styles.footerText, isBusy && styles.linkDisabled]}>Back to Sign in</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
 
@@ -248,6 +464,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
   },
+  verifying: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  verifyingText: {
+    color: colors.bodyText.main,
+    fontSize: 12,
+  },
   fields: {
     width: "100%",
     maxWidth: 360,
@@ -279,6 +504,16 @@ const styles = StyleSheet.create({
   inputWithIcon: {
     paddingLeft: 44,
   },
+  inputWithToggle: {
+    paddingRight: 44,
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 14,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+  },
   inputError: {
     borderColor: colors.red.main,
   },
@@ -288,6 +523,23 @@ const styles = StyleSheet.create({
   fieldError: {
     color: colors.red.main,
     fontSize: 10,
+  },
+  rules: {
+    width: "100%",
+    maxWidth: 360,
+    gap: 4,
+  },
+  rule: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  ruleLabel: {
+    color: colors.bodyText.main,
+    fontSize: 10,
+  },
+  ruleLabelValid: {
+    color: colors.primary.main,
   },
   error: {
     width: "100%",

@@ -4,6 +4,7 @@
     "slug": "fateful-moment",
     "version": "1.0.0",
     "orientation": "landscape",
+    "scheme": "fatefulmoment",
     "icon": "",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#020617",
