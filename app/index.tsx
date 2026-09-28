@@ -1,6 +1,7 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import EmailIcon from "@/assets/icons/email.svg";
 import AppleIcon from "@/assets/icons/apple.svg";
 import GoogleIcon from "@/assets/icons/google.svg";
@@ -18,13 +19,13 @@ export default function WelcomeScreen() {
       </View>
 
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.primaryButton} onPress={() => router.push("/register")}>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => router.push(ROUTES.REGISTER)}>
           <EmailIcon width={20} height={20} />
 
           <Text style={styles.primaryButtonText}>Continue with Email</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.guestButton} onPress={() => router.replace("/scenarios")}>
+        <TouchableOpacity style={styles.guestButton} onPress={() => router.replace(ROUTES.SCENARIOS)}>
           <Text style={styles.guestButtonText}>Continue without creating an account</Text>
         </TouchableOpacity>
 

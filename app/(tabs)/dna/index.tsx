@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import { router } from "expo-router";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 
 const steps = [
   {
@@ -46,7 +47,7 @@ export default function DnaScreen() {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={() => router.push("/scenarios")}>
+        <TouchableOpacity style={styles.button} onPress={() => router.push(ROUTES.SCENARIOS)}>
           <Text style={styles.buttonText}>Scenarios</Text>
         </TouchableOpacity>
       </ScrollView>

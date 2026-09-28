@@ -4,6 +4,7 @@ import ScenarioCard from "@/app/(tabs)/scenarios/components/scenario/ScenarioCar
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { scenarios } from "@/data/scenarios";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 
 // Helper to map image assets
 const imageMap: { [key: number]: any } = {
@@ -42,7 +43,7 @@ export default function ScenariosScreen() {
             description={scenario.description}
             time={scenario.time}
             image={imageMap[scenario.id]}
-            onPress={() => router.push(`/scenarios/${scenario.id}`)}
+            onPress={() => router.push(`${ROUTES.SCENARIOS}/${scenario.id}`)}
           />
         ))}
       </ScrollView>

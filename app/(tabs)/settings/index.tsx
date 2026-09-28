@@ -3,6 +3,7 @@ import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "rea
 import { router } from "expo-router";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import { supabase } from "@/services/supabase";
 
 export default function SettingsScreen() {
@@ -42,7 +43,7 @@ export default function SettingsScreen() {
       return;
     }
 
-    router.replace("/");
+    router.replace(ROUTES.WELCOME);
   };
 
   return (
@@ -74,7 +75,7 @@ export default function SettingsScreen() {
         ) : (
           <TouchableOpacity
             style={[styles.button, styles.loginButton]}
-            onPress={() => router.replace("/")}
+            onPress={() => router.replace(ROUTES.WELCOME)}
             activeOpacity={0.8}
           >
             <Text style={styles.loginButtonText}>Log in</Text>

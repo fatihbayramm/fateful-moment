@@ -15,6 +15,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import { supabase } from "@/services/supabase";
 import BackButton from "@/components/common/BackButton";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
@@ -147,7 +148,7 @@ export default function RegisterScreen() {
         return;
       }
 
-      router.replace("/scenarios");
+      router.replace(ROUTES.SCENARIOS);
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
@@ -272,7 +273,7 @@ export default function RegisterScreen() {
           <Text style={styles.footerText}>Already have an account?</Text>
           <Text
             style={[styles.footerLink, loading && styles.footerLinkDisabled]}
-            onPress={loading ? undefined : () => router.replace("/login")}
+            onPress={loading ? undefined : () => router.replace(ROUTES.LOGIN)}
           >
             Sign in
           </Text>

@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
 
 interface BackButtonProps {
@@ -19,7 +20,7 @@ export default function BackButton({ onPress }: BackButtonProps) {
       return;
     }
 
-    router.replace("/scenarios");
+    router.replace(ROUTES.SCENARIOS);
   };
 
   return (

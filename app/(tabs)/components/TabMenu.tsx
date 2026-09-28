@@ -2,15 +2,16 @@ import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router, usePathname } from "expo-router";
 import { colors } from "@/constants/theme";
+import { getPathname, ROUTES } from "@/utils/routes";
 import MenuIcon from "@/assets/icons/menu.svg";
 import CompassIcon from "@/assets/icons/compass.svg";
 import DnaIcon from "@/assets/icons/dna.svg";
 import SettingsIcon from "@/assets/icons/settings.svg";
 
 const routes = [
-  { name: "scenarios", label: "SCENARIOS", Icon: CompassIcon },
-  { name: "dna", label: "DNA", Icon: DnaIcon },
-  { name: "settings", label: "SETTINGS", Icon: SettingsIcon },
+  { href: ROUTES.SCENARIOS, label: "SCENARIOS", Icon: CompassIcon },
+  { href: ROUTES.DNA, label: "DNA", Icon: DnaIcon },
+  { href: ROUTES.SETTINGS, label: "SETTINGS", Icon: SettingsIcon },
 ] as const;
 
 const iconStyle = { width: 22, height: 22 };
@@ -19,9 +20,9 @@ export default function TabMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const handleSelect = (name: string) => {
+  const handleSelect = (href: (typeof routes)[number]["href"]) => {
     setOpen(false);
-    router.push(`/${name}`);
+    router.push(href);
   };
 
   return (
@@ -36,14 +37,14 @@ export default function TabMenu() {
             <Text style={styles.title}>Menu</Text>
 
             <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
-              {routes.map(({ name, label, Icon }) => {
-                const isActive = pathname === `/${name}`;
+              {routes.map(({ href, label, Icon }) => {
+                const isActive = pathname === getPathname(href);
 
                 return (
                   <TouchableOpacity
-                    key={name}
+                    key={href}
                     style={[styles.item, isActive && styles.itemActive]}
-                    onPress={() => handleSelect(name)}
+                    onPress={() => handleSelect(href)}
                   >
                     <Icon {...iconStyle} color={isActive ? colors.primary.main : colors.bodyText.main} />
 

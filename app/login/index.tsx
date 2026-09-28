@@ -15,6 +15,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import { supabase } from "@/services/supabase";
 import BackButton from "@/components/common/BackButton";
 import EyeIcon from "@/assets/icons/eye.svg";
@@ -124,7 +125,7 @@ export default function LoginScreen() {
         return;
       }
 
-      router.replace("/scenarios");
+      router.replace(ROUTES.SCENARIOS);
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
@@ -235,7 +236,7 @@ export default function LoginScreen() {
 
           <Text
             style={[styles.footerLink, loading && styles.linkDisabled]}
-            onPress={loading ? undefined : () => router.replace("/register")}
+            onPress={loading ? undefined : () => router.replace(ROUTES.REGISTER)}
           >
             Sign up
           </Text>
@@ -243,7 +244,7 @@ export default function LoginScreen() {
       </KeyboardAwareScrollView>
 
       <View style={styles.back}>
-        <BackButton onPress={() => router.replace("/register")} />
+        <BackButton onPress={() => router.replace(ROUTES.REGISTER)} />
       </View>
     </KeyboardAvoidingView>
   );

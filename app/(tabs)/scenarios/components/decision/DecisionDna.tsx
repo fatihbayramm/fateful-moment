@@ -2,6 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "rea
 import { router } from "expo-router";
 import RadarChart from "@/app/(tabs)/scenarios/components/decision/RadarChart";
 import { colors } from "@/constants/theme";
+import { ROUTES } from "@/utils/routes";
 import type { DecisionDna as DecisionDnaType, Metrics } from "@/data/scenarios";
 import DnaIcon from "@/assets/icons/dna.svg";
 import ActivityIcon from "@/assets/icons/activity.svg";
@@ -142,7 +143,7 @@ export default function DecisionDna({ dna }: { dna: DecisionDnaType }) {
             <Text style={styles.blindSpotText}>{dna.blindSpot}</Text>
           </View>
 
-          <TouchableOpacity style={styles.newScenarioButton} onPress={() => router.push("/scenarios")}>
+          <TouchableOpacity style={styles.newScenarioButton} onPress={() => router.push(ROUTES.SCENARIOS)}>
             <Text style={styles.newScenarioButtonText}>New Scenario</Text>
           </TouchableOpacity>
         </View>
