@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Pressable,
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -19,6 +20,8 @@ import { supabase } from "../../services/supabase";
 
 import BackButton from "../../components/common/BackButton";
 import CheckCircleIcon from "../../assets/icons/check-circle.svg";
+import EyeIcon from "../../assets/icons/eye.svg";
+import EyeOffIcon from "../../assets/icons/eye_2.svg";
 
 const passwordRules = [
   { label: "Must be at least 8 characters long", test: (value: string) => value.length >= 8 },
@@ -78,6 +81,7 @@ export default function RegisterScreen() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [loading, setLoading] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener("keyboardDidShow", () => setIsKeyboardVisible(true));
@@ -207,16 +211,35 @@ export default function RegisterScreen() {
           </View>
 
           <View style={styles.field}>
-            <TextInput
-              style={[styles.input, loading && styles.inputDisabled, fieldErrors.password && styles.inputError]}
-              placeholder="Your password"
-              placeholderTextColor={colors.bodyText.main}
-              value={password}
-              onChangeText={(value) => handleChange("password", value)}
-              secureTextEntry
-              autoCapitalize="none"
-              editable={!loading}
-            />
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={[
+                  styles.input,
+                  styles.inputWithToggle,
+                  loading && styles.inputDisabled,
+                  fieldErrors.password && styles.inputError,
+                ]}
+                placeholder="Your password"
+                placeholderTextColor={colors.bodyText.main}
+                value={password}
+                onChangeText={(value) => handleChange("password", value)}
+                secureTextEntry={!isPasswordVisible}
+                autoCapitalize="none"
+                editable={!loading}
+              />
+
+              <Pressable
+                style={styles.passwordToggle}
+                onPress={() => setIsPasswordVisible((current) => !current)}
+                hitSlop={8}
+              >
+                {isPasswordVisible ? (
+                  <EyeOffIcon width={18} height={18} color={colors.bodyText.main} />
+                ) : (
+                  <EyeIcon width={18} height={18} color={colors.bodyText.main} />
+                )}
+              </Pressable>
+            </View>
 
             {fieldErrors.password ? <Text style={styles.fieldError}>{fieldErrors.password}</Text> : null}
           </View>
@@ -310,6 +333,20 @@ const styles = StyleSheet.create({
   },
   field: {
     gap: 4,
+  },
+  inputWrapper: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  inputWithToggle: {
+    paddingRight: 48,
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 14,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
   },
   inputError: {
     borderColor: colors.red.main,
