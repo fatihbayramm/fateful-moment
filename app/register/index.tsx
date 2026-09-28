@@ -1,14 +1,17 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Image,
-  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
 
 import { colors } from "../../constants/theme";
@@ -30,6 +33,17 @@ export default function RegisterScreen() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => setIsKeyboardVisible(true));
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => setIsKeyboardVisible(false));
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const rules = useMemo(
     () => passwordRules.map((rule) => ({ label: rule.label, valid: rule.test(password) })),
@@ -62,10 +76,19 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={0}
+    >
+      <KeyboardAwareScrollView
         contentContainerStyle={styles.content}
+        enableOnAndroid
+        extraScrollHeight={20}
+        keyboardOpeningTime={0}
         keyboardShouldPersistTaps="handled"
+        scrollEnabled={isKeyboardVisible}
+        onScrollBeginDrag={Keyboard.dismiss}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.logoRing}>
@@ -143,12 +166,12 @@ export default function RegisterScreen() {
             Sign in
           </Text>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
 
       <View style={styles.back}>
         <BackButton />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
