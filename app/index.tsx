@@ -1,17 +1,17 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
-import { colors } from "../constants/theme";
+import { colors } from "@/constants/theme";
 
-import EmailIcon from "../assets/icons/email.svg";
-import AppleIcon from "../assets/icons/apple.svg";
-import GoogleIcon from "../assets/icons/google.svg";
+import EmailIcon from "@/assets/icons/email.svg";
+import AppleIcon from "@/assets/icons/apple.svg";
+import GoogleIcon from "@/assets/icons/google.svg";
 
 export default function WelcomeScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
       <View style={styles.logoRing}>
-        <Image source={require("../assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
+        <Image source={require("@/assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
       </View>
 
       <View style={styles.headerText}>

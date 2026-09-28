@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
-import TabMenu from "../components/TabMenu";
-import { colors } from "../../../constants/theme";
-import { supabase } from "../../../services/supabase";
+import TabMenu from "@/app/(tabs)/components/TabMenu";
+import { colors } from "@/constants/theme";
+import { supabase } from "@/services/supabase";
 
 export default function SettingsScreen() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);

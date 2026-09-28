@@ -40,6 +40,9 @@
         }
       ],
       "./plugins/withForcedEdgeToEdge"
-    ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    }
   }
 }

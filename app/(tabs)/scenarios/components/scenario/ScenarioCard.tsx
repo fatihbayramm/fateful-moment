@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
-import { colors } from "../../../../../constants/theme";
-import AlarmClockIcon from "../../../../../assets/icons/alarm-clock.svg";
+import { colors } from "@/constants/theme";
+import AlarmClockIcon from "@/assets/icons/alarm-clock.svg";
 
 interface ScenarioCardProps {
   title: string;

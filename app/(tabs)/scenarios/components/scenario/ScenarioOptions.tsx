@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { colors } from "../../../../../constants/theme";
-import BackButton from "../../../../../components/common/BackButton";
-import type { ScenarioOption } from "../../../../../data/scenarios";
+import { colors } from "@/constants/theme";
+import BackButton from "@/components/common/BackButton";
+import type { ScenarioOption } from "@/data/scenarios";
 
 interface ScenarioOptionsProps {
   options: ScenarioOption[];

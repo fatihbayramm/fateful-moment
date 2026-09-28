@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Line, Polygon, Text as SvgText } from "react-native-svg";
 
-import { colors } from "../../../../../constants/theme";
-import type { Metrics } from "../../../../../data/scenarios";
+import { colors } from "@/constants/theme";
+import type { Metrics } from "@/data/scenarios";
 
 const SIZE = 168;
 const CENTER = SIZE / 2;

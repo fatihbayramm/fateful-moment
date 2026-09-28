@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import ScenarioOptions from "./components/scenario/ScenarioOptions";
-import DecisionDna from "./components/decision/DecisionDna";
-import BackButton from "../../../components/common/BackButton";
-import { colors } from "../../../constants/theme";
-import { scenarios, type ScenarioOption } from "../../../data/scenarios";
+import ScenarioOptions from "@/app/(tabs)/scenarios/components/scenario/ScenarioOptions";
+import DecisionDna from "@/app/(tabs)/scenarios/components/decision/DecisionDna";
+import BackButton from "@/components/common/BackButton";
+import { colors } from "@/constants/theme";
+import { scenarios, type ScenarioOption } from "@/data/scenarios";
 
 const imageMap: Record<number, any> = {
-  1: require("../../../assets/images/scenarios/iraq_war.jpeg"),
-  2: require("../../../assets/images/scenarios/cuban_missile_crisis.jpeg"),
-  3: require("../../../assets/images/scenarios/world_war_1.jpeg"),
-  4: require("../../../assets/images/scenarios/world_war_2.jpeg"),
-  5: require("../../../assets/images/scenarios/vietnam_war.jpeg"),
+  1: require("@/assets/images/scenarios/iraq_war.jpeg"),
+  2: require("@/assets/images/scenarios/cuban_missile_crisis.jpeg"),
+  3: require("@/assets/images/scenarios/world_war_1.jpeg"),
+  4: require("@/assets/images/scenarios/world_war_2.jpeg"),
+  5: require("@/assets/images/scenarios/vietnam_war.jpeg"),
 };
 
 export default function Scenario() {

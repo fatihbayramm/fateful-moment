@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router, usePathname } from "expo-router";
 
-import { colors } from "../../../constants/theme";
+import { colors } from "@/constants/theme";
 
-import MenuIcon from "../../../assets/icons/menu.svg";
-import CompassIcon from "../../../assets/icons/compass.svg";
-import DnaIcon from "../../../assets/icons/dna.svg";
-import SettingsIcon from "../../../assets/icons/settings.svg";
+import MenuIcon from "@/assets/icons/menu.svg";
+import CompassIcon from "@/assets/icons/compass.svg";
+import DnaIcon from "@/assets/icons/dna.svg";
+import SettingsIcon from "@/assets/icons/settings.svg";
 
 const routes = [
   { name: "scenarios", label: "SCENARIOS", Icon: CompassIcon },

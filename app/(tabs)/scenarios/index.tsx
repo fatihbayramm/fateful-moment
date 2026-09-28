@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { router } from "expo-router";
 
-import ScenarioCard from "./components/scenario/ScenarioCard";
-import TabMenu from "../components/TabMenu";
-import { scenarios } from "../../../data/scenarios";
-import { colors } from "../../../constants/theme";
+import ScenarioCard from "@/app/(tabs)/scenarios/components/scenario/ScenarioCard";
+import TabMenu from "@/app/(tabs)/components/TabMenu";
+import { scenarios } from "@/data/scenarios";
+import { colors } from "@/constants/theme";
 
 // Helper to map image assets
 const imageMap: { [key: number]: any } = {
-  1: require("../../../assets/images/scenarios/iraq_war.jpeg"),
-  2: require("../../../assets/images/scenarios/cuban_missile_crisis.jpeg"),
-  3: require("../../../assets/images/scenarios/world_war_1.jpeg"),
-  4: require("../../../assets/images/scenarios/world_war_2.jpeg"),
-  5: require("../../../assets/images/scenarios/vietnam_war.jpeg"),
+  1: require("@/assets/images/scenarios/iraq_war.jpeg"),
+  2: require("@/assets/images/scenarios/cuban_missile_crisis.jpeg"),
+  3: require("@/assets/images/scenarios/world_war_1.jpeg"),
+  4: require("@/assets/images/scenarios/world_war_2.jpeg"),
+  5: require("@/assets/images/scenarios/vietnam_war.jpeg"),
 };
 
 export default function ScenariosScreen() {

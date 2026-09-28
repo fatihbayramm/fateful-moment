@@ -1,39 +1,39 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
-import RadarChart from "./RadarChart";
-import { colors } from "../../../../../constants/theme";
-import type { DecisionDna as DecisionDnaType, Metrics } from "../../../../../data/scenarios";
+import RadarChart from "@/app/(tabs)/scenarios/components/decision/RadarChart";
+import { colors } from "@/constants/theme";
+import type { DecisionDna as DecisionDnaType, Metrics } from "@/data/scenarios";
 
 type MetricKey = keyof Metrics;
 
-import DnaIcon from "../../../../../assets/icons/dna.svg";
-import ActivityIcon from "../../../../../assets/icons/activity.svg";
-import TargetIcon from "../../../../../assets/icons/target.svg";
-import EyeIcon from "../../../../../assets/icons/eye.svg";
-import VectorIcon from "../../../../../assets/icons/vector.svg";
-import RiskIcon from "../../../../../assets/icons/risk.svg";
-import SettingsIcon from "../../../../../assets/icons/settings_2.svg";
-import HeartIcon from "../../../../../assets/icons/heart.svg";
-import BalanceIcon from "../../../../../assets/icons/balance.svg";
+import DnaIcon from "@/assets/icons/dna.svg";
+import ActivityIcon from "@/assets/icons/activity.svg";
+import TargetIcon from "@/assets/icons/target.svg";
+import EyeIcon from "@/assets/icons/eye.svg";
+import VectorIcon from "@/assets/icons/vector.svg";
+import RiskIcon from "@/assets/icons/risk.svg";
+import SettingsIcon from "@/assets/icons/settings_2.svg";
+import HeartIcon from "@/assets/icons/heart.svg";
+import BalanceIcon from "@/assets/icons/balance.svg";
 
 const portraitMap: Record<string, any> = {
-  "asiri-analist.png": require("../../../../../assets/images/dna-portraits/asiri-analist.png"),
-  "bodozlama-dalasan.png": require("../../../../../assets/images/dna-portraits/bodozlama-dalasan.png"),
-  "cesur-vizyoner.png": require("../../../../../assets/images/dna-portraits/cesur-vizyoner.png"),
-  "empatik-lider-boy.png": require("../../../../../assets/images/dna-portraits/empatik-lider-boy.png"),
-  "empatik-lider.png": require("../../../../../assets/images/dna-portraits/empatik-lider.png"),
-  "fedakar-koruyucu.png": require("../../../../../assets/images/dna-portraits/fedakar-koruyucu.png"),
-  "ilkeli-direnisci-girl.png": require("../../../../../assets/images/dna-portraits/ilkeli-direnisci-girl.png"),
-  "ilkeli-direnisci.png": require("../../../../../assets/images/dna-portraits/ilkeli-direnisci.png"),
-  "karizmatik-manipulator.png": require("../../../../../assets/images/dna-portraits/karizmatik-manipulator.png"),
-  "kriz-yoneticisi.png": require("../../../../../assets/images/dna-portraits/kriz-yoneticisi.png"),
-  "pragmatik-taktisyen-girl-2.png": require("../../../../../assets/images/dna-portraits/pragmatik-taktisyen-girl-2.png"),
-  "pragmatik-taktisyen-girl.png": require("../../../../../assets/images/dna-portraits/pragmatik-taktisyen-girl.png"),
-  "pragmatik-taktisyen.png": require("../../../../../assets/images/dna-portraits/pragmatik-taktisyen.png"),
-  "sogukkanli-stratejist.png": require("../../../../../assets/images/dna-portraits/sogukkanli-stratejist.png"),
-  "temkinli-yenilikci.png": require("../../../../../assets/images/dna-portraits/temkinli-yenilikci.png"),
-  "uyumcu.png": require("../../../../../assets/images/dna-portraits/uyumcu.png"),
+  "asiri-analist.png": require("@/assets/images/dna-portraits/asiri-analist.png"),
+  "bodozlama-dalasan.png": require("@/assets/images/dna-portraits/bodozlama-dalasan.png"),
+  "cesur-vizyoner.png": require("@/assets/images/dna-portraits/cesur-vizyoner.png"),
+  "empatik-lider-boy.png": require("@/assets/images/dna-portraits/empatik-lider-boy.png"),
+  "empatik-lider.png": require("@/assets/images/dna-portraits/empatik-lider.png"),
+  "fedakar-koruyucu.png": require("@/assets/images/dna-portraits/fedakar-koruyucu.png"),
+  "ilkeli-direnisci-girl.png": require("@/assets/images/dna-portraits/ilkeli-direnisci-girl.png"),
+  "ilkeli-direnisci.png": require("@/assets/images/dna-portraits/ilkeli-direnisci.png"),
+  "karizmatik-manipulator.png": require("@/assets/images/dna-portraits/karizmatik-manipulator.png"),
+  "kriz-yoneticisi.png": require("@/assets/images/dna-portraits/kriz-yoneticisi.png"),
+  "pragmatik-taktisyen-girl-2.png": require("@/assets/images/dna-portraits/pragmatik-taktisyen-girl-2.png"),
+  "pragmatik-taktisyen-girl.png": require("@/assets/images/dna-portraits/pragmatik-taktisyen-girl.png"),
+  "pragmatik-taktisyen.png": require("@/assets/images/dna-portraits/pragmatik-taktisyen.png"),
+  "sogukkanli-stratejist.png": require("@/assets/images/dna-portraits/sogukkanli-stratejist.png"),
+  "temkinli-yenilikci.png": require("@/assets/images/dna-portraits/temkinli-yenilikci.png"),
+  "uyumcu.png": require("@/assets/images/dna-portraits/uyumcu.png"),
 };
 
 const metricAxes: { key: MetricKey; label: string; Icon: any }[] = [

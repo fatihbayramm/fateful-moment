@@ -1,10 +1,10 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
-import TabMenu from "../components/TabMenu";
-import { colors } from "../../../constants/theme";
+import TabMenu from "@/app/(tabs)/components/TabMenu";
+import { colors } from "@/constants/theme";
 
-import DnaIcon from "../../../assets/icons/dna.svg";
+import DnaIcon from "@/assets/icons/dna.svg";
 
 const steps = [
   {

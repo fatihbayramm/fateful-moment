@@ -15,12 +15,12 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
 
-import { colors } from "../../constants/theme";
-import { supabase } from "../../services/supabase";
+import { colors } from "@/constants/theme";
+import { supabase } from "@/services/supabase";
 
-import BackButton from "../../components/common/BackButton";
-import EyeIcon from "../../assets/icons/eye.svg";
-import EyeOffIcon from "../../assets/icons/eye_2.svg";
+import BackButton from "@/components/common/BackButton";
+import EyeIcon from "@/assets/icons/eye.svg";
+import EyeOffIcon from "@/assets/icons/eye_2.svg";
 
 type FieldName = "email" | "password";
 type FieldErrors = Partial<Record<FieldName, string>>;
@@ -151,7 +151,7 @@ export default function LoginScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.logoRing}>
-          <Image source={require("../../assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
+          <Image source={require("@/assets/images/app/app_icon.png")} style={styles.logo} resizeMode="cover" />
         </View>
 
         <View style={styles.headerText}>

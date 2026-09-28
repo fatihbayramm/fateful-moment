@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 
-import { colors } from "../../constants/theme";
-import ArrowLeftIcon from "../../assets/icons/arrow-left.svg";
+import { colors } from "@/constants/theme";
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
 
 interface BackButtonProps {
   onPress?: () => void;
