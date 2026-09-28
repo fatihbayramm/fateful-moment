@@ -32,10 +32,7 @@ const withForcedEdgeToEdge = (config) =>
 
     const edgeToEdge = `    WindowCompat.setDecorFitsSystemWindows(window, false)\n`;
 
-    contents = contents.replace(
-      /(override fun onCreate\(savedInstanceState: Bundle\?\) \{\r?\n)/,
-      `$1${edgeToEdge}`
-    );
+    contents = contents.replace(/(super\.onCreate\((?:null|savedInstanceState)\)\r?\n)/, `$1${edgeToEdge}`);
 
     modConfig.modResults.contents = contents;
 
