@@ -248,7 +248,7 @@ export default function LoginScreen() {
       </KeyboardAwareScrollView>
 
       <View style={styles.back}>
-        <BackButton />
+        <BackButton onPress={() => router.replace("/register")} />
       </View>
     </KeyboardAvoidingView>
   );

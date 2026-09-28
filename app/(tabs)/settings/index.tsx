@@ -1,9 +1,31 @@
-import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
 
 import TabMenu from "../components/TabMenu";
 import { colors } from "../../../constants/theme";
+import { supabase } from "../../../services/supabase";
 
 export default function SettingsScreen() {
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogOut = async () => {
+    if (isLoggingOut) {
+      return;
+    }
+
+    setIsLoggingOut(true);
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      setIsLoggingOut(false);
+      return;
+    }
+
+    router.replace("/");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -17,8 +39,17 @@ export default function SettingsScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Account</Text>
 
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
-          <Text style={styles.buttonText}>Log out</Text>
+        <TouchableOpacity
+          style={[styles.button, isLoggingOut && styles.buttonDisabled]}
+          onPress={handleLogOut}
+          disabled={isLoggingOut}
+          activeOpacity={0.8}
+        >
+          {isLoggingOut ? (
+            <ActivityIndicator color={colors.red.main} />
+          ) : (
+            <Text style={styles.buttonText}>Log out</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -75,5 +106,8 @@ const styles = StyleSheet.create({
     color: colors.red.main,
     fontSize: 12,
     fontWeight: "bold",
+  },
+  buttonDisabled: {
+    opacity: 0.5,
   },
 });
