@@ -38,6 +38,8 @@ export default function TabMenu() {
         animationType="fade"
         statusBarTranslucent
         navigationBarTranslucent
+        // The app is landscape-locked, and RN's Modal asks for a portrait-only mask by default.
+        supportedOrientations={["landscape", "landscape-left", "landscape-right"]}
         onRequestClose={() => setOpen(false)}
       >
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
