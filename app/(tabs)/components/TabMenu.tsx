@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     color: colors.bodyText.main,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "bold",
     letterSpacing: 1,
   },

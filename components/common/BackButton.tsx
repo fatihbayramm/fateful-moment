@@ -8,23 +8,9 @@ interface BackButtonProps {
   onPress?: () => void;
 }
 
-export default function BackButton({ onPress }: BackButtonProps) {
-  const handlePress = () => {
-    if (onPress) {
-      onPress();
-      return;
-    }
-
-    if (router.canGoBack()) {
-      router.back();
-      return;
-    }
-
-    router.replace(ROUTES.SCENARIOS);
-  };
-
+export default function BackButton({ onPress = () => router.replace(ROUTES.SCENARIOS) }: BackButtonProps) {
   return (
-    <TouchableOpacity onPress={handlePress} hitSlop={8} style={styles.button} activeOpacity={0.7}>
+    <TouchableOpacity onPress={onPress} hitSlop={8} style={styles.button} activeOpacity={0.7}>
       <ArrowLeftIcon width={20} height={20} color={colors.text.main} />
     </TouchableOpacity>
   );

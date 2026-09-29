@@ -16,7 +16,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
 import { ROUTES } from "@/utils/routes";
-import { enterApp } from "@/utils/navigation";
+import { enterApp, replaceRoute } from "@/utils/navigation";
 import { supabase } from "@/services/supabase";
 import BackButton from "@/components/common/BackButton";
 import CheckCircleIcon from "@/assets/icons/check-circle.svg";
@@ -282,7 +282,7 @@ export default function RegisterScreen() {
       </KeyboardAwareScrollView>
 
       <View style={styles.back}>
-        <BackButton />
+        <BackButton onPress={() => replaceRoute(ROUTES.WELCOME)} />
       </View>
     </KeyboardAvoidingView>
   );
