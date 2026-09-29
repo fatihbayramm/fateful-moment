@@ -26,7 +26,7 @@ export default function WelcomeScreen() {
           <Text style={styles.primaryButtonText}>Continue with Email</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.guestButton} onPress={() => enterApp(ROUTES.SCENARIOS)}>
+        <TouchableOpacity style={styles.guestButton} onPress={enterApp}>
           <Text style={styles.guestButtonText}>Continue without creating an account</Text>
         </TouchableOpacity>
 

@@ -217,7 +217,7 @@ export default function ResetPasswordScreen() {
         return;
       }
 
-      enterApp(ROUTES.SCENARIOS);
+      enterApp();
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
