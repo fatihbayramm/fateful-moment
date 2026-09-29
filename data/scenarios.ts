@@ -53,7 +53,7 @@ export const scenarios: Scenario[] = [
             "You eliminate threats before they can gather strength. Speed and decisive force matter more to you than consensus.",
           metrics: { vision: 75, courage: 88, risk: 92, control: 40, empathy: 25, ethics: 28 },
           patternNote:
-            "You prioritize the immediate physical elimination of threats over international consensus and diplomatic legitimacy. In high-stakes moments, you choose decisive force over waiting for external approval.",
+            "You prioritize the immediate physical elimination of threats over international consensus and diplomatic legitimacy. In high-stakes moments, you choose decisive force over waiting for external approval. Your conviction hardens as the cost of hesitation grows, and you treat reversal as a greater loss than escalation.",
           blindSpot: "Underestimates asymmetric post-invasion fallout and humanitarian cost.",
         },
       },
@@ -69,7 +69,7 @@ export const scenarios: Scenario[] = [
             "You trust process over urgency. Verification first, action second — legitimacy is the only source of power you fully rely on.",
           metrics: { vision: 65, courage: 42, risk: 30, control: 78, empathy: 82, ethics: 90 },
           patternNote:
-            "You place institutional legitimacy and rules-based processes above urgent kinetic actions. Your primary instinct is to avoid catastrophic escalation through thorough verification.",
+            "You place institutional legitimacy and rules-based processes above urgent kinetic actions. Your primary instinct is to avoid catastrophic escalation through thorough verification. The longer a crisis drags on, the more your patience hardens into institutional obstruction.",
           blindSpot: "Susceptible to strategic deception and prolonged adversary stalling tactics.",
         },
       },
@@ -85,7 +85,7 @@ export const scenarios: Scenario[] = [
             "You prefer leverage at a distance. Precision and technology let you apply real pressure without bleeding your own people.",
           metrics: { vision: 70, courage: 65, risk: 50, control: 84, empathy: 55, ethics: 62 },
           patternNote:
-            "You seek maximum operational leverage through superior standoff technology rather than risky ground entanglements. This reveals a tactical preference for calculated pressure while safeguarding your own personnel.",
+            "You seek maximum operational leverage through superior standoff technology rather than risky ground entanglements. This reveals a tactical preference for calculated pressure while safeguarding your own personnel. Distance keeps your own people out of harm's way, but it also insulates you from realities you cannot observe directly.",
           blindSpot: "Leaves foundational geopolitical issues unsolved while sustaining high ongoing costs.",
         },
       },
@@ -101,7 +101,7 @@ export const scenarios: Scenario[] = [
             "You never act in your own name. Covert proxies and quiet orchestration are, for you, the only way real change happens.",
           metrics: { vision: 82, courage: 70, risk: 75, control: 35, empathy: 40, ethics: 42 },
           patternNote:
-            "You favor covert operations and third-party execution over open, direct national accountability. You believe systemic change is best orchestrated quietly from behind closed doors.",
+            "You favor covert operations and third-party execution over open, direct national accountability. You believe systemic change is best orchestrated quietly from behind closed doors. Deniability is your operating currency, and it is also what shields you from ever being held accountable.",
           blindSpot: "Extreme vulnerability to intelligence leaks and unstable successor regimes.",
         },
       },
@@ -117,7 +117,7 @@ export const scenarios: Scenario[] = [
             "You believe slow, systemic pressure beats sudden shocks. Institutions and supply lines, not armies, do the real work.",
           metrics: { vision: 58, courage: 35, risk: 25, control: 72, empathy: 38, ethics: 52 },
           patternNote:
-            "You believe the most effective way to neutralize an adversary is through slow, systemic economic strangulation. You avoid sudden shocks in favor of sustained institutional siege.",
+            "You believe the most effective way to neutralize an adversary is through slow, systemic economic strangulation. You avoid sudden shocks in favor of sustained institutional siege. You accept a longer and uglier timeline in exchange for an outcome that weakens the adversary without humiliating him.",
           blindSpot: "Collateral civilian economic suffering often outpaces pressure on entrenched ruling elites.",
         },
       },
@@ -142,7 +142,7 @@ export const scenarios: Scenario[] = [
             "You see the big picture and walk towards it — no matter the cost. Ethics sometimes take a back seat, but few surpass you in the courage to take action.",
           metrics: { vision: 88, courage: 82, risk: 79, control: 55, empathy: 38, ethics: 31 },
           patternNote:
-            "You project immense resolve without prematurely closing off your adversary's path to de-escalation[cite: 6]. While accepting tremendous pressure, you carefully preserve room for strategic negotiation[cite: 6].",
+            "You project immense resolve without prematurely closing off your adversary's path to de-escalation[cite: 6]. While accepting tremendous pressure, you carefully preserve room for strategic negotiation[cite: 6]. You hold the door open for a graceful retreat while making certain the other side knows exactly what overstepping costs.",
           blindSpot: "Relies heavily on adversary rational behavior under intense operational friction.",
         },
       },
@@ -157,7 +157,7 @@ export const scenarios: Scenario[] = [
             "You refuse to tolerate existential threats on your border. Hesitation, in your view, is far more dangerous than escalation.",
           metrics: { vision: 62, courage: 94, risk: 96, control: 45, empathy: 20, ethics: 35 },
           patternNote:
-            "You demand operational finality and refuse to tolerate immediate existential threats on your border. You would rather risk an outright war than project even a hint of hesitation.",
+            "You demand operational finality and refuse to tolerate immediate existential threats on your border. You would rather risk an outright war than project even a hint of hesitation. Backing down is the one outcome you treat as genuinely unacceptable, and that conviction narrows your range of options.",
           blindSpot: "High probability of triggering uncontrolled nuclear chain reactions.",
         },
       },
@@ -173,7 +173,7 @@ export const scenarios: Scenario[] = [
             "You erase the problem rather than manage it. Total control, in your eyes, leaves no room for an adversary to adapt or survive.",
           metrics: { vision: 50, courage: 90, risk: 95, control: 60, empathy: 18, ethics: 22 },
           patternNote:
-            "Your mindset leans toward total eradication of adversary threats rather than containment or balance. You mobilize maximum resources to ensure absolute territorial control regardless of friction.",
+            "Your mindset leans toward total eradication of adversary threats rather than containment or balance. You mobilize maximum resources to ensure absolute territorial control regardless of friction. You read every partial measure as a temporary fix and reserve your real answer for a permanent one.",
           blindSpot: "Neglects operational intelligence regarding tactical nuclear battlefield readiness.",
         },
       },
@@ -189,7 +189,7 @@ export const scenarios: Scenario[] = [
             "You treat security as a dynamic equilibrium. Trading a small piece now to prevent catastrophe later is wisdom, never weakness.",
           metrics: { vision: 91, courage: 58, risk: 42, control: 68, empathy: 75, ethics: 78 },
           patternNote:
-            "You view international security as a dynamic equilibrium where compromise is an act of foresight. You are willing to trade regional tactical chips to prevent global systemic catastrophe.",
+            "You view international security as a dynamic equilibrium where compromise is an act of foresight. You are willing to trade regional tactical chips to prevent global systemic catastrophe. You judge agreements by the catastrophe they prevent, not by the territory they surrender.",
           blindSpot: "Perceived domestic political weakness and alliance cohesion strains.",
         },
       },
@@ -205,7 +205,7 @@ export const scenarios: Scenario[] = [
             "You apply pressure until the other side breaks. The moment of maximum tension is exactly where the outcome gets decided.",
           metrics: { vision: 74, courage: 85, risk: 88, control: 62, empathy: 30, ethics: 40 },
           patternNote:
-            "You engage in psychological brinkmanship, daring your opponent to blink first under extreme strain. You rely on posturing and escalation dominance rather than localized battlefield solutions.",
+            "You engage in psychological brinkmanship, daring your opponent to blink first under extreme strain. You rely on posturing and escalation dominance rather than localized battlefield solutions. The moment of maximum tension is where you feel most in control, and where you are most exposed to a miscalculation.",
           blindSpot: "Accidental hair-trigger escalations due to human radar warning error.",
         },
       },
@@ -230,7 +230,7 @@ export const scenarios: Scenario[] = [
             "Pride and honour are non-negotiable. Any visible sign of restraint, in your view, only invites further aggression.",
           metrics: { vision: 45, courage: 86, risk: 94, control: 52, empathy: 15, ethics: 25 },
           patternNote:
-            "You prioritize prestige, honor, and swift retribution far above international systemic stability. You believe displaying any sign of restraint invites further aggression from rivals.",
+            "You prioritize prestige, honor, and swift retribution far above international systemic stability. You believe displaying any sign of restraint invites further aggression from rivals. A public perception of weakness, in your reading, costs more than any war you might have to fight over it.",
           blindSpot: "Blind to chain-reaction alliance mobilizations and long trench stalemates.",
         },
       },
@@ -246,7 +246,7 @@ export const scenarios: Scenario[] = [
             "You place deep faith in collective diplomacy. Human life and continental peace outweigh any operational momentum.",
           metrics: { vision: 86, courage: 40, risk: 28, control: 62, empathy: 88, ethics: 92 },
           patternNote:
-            "You place deep faith in collective diplomacy and mediation to diffuse hyper-nationalist fervor. You willingly sacrifice immediate operational momentum to preserve human life and continental peace.",
+            "You place deep faith in collective diplomacy and mediation to diffuse hyper-nationalist fervor. You willingly sacrifice immediate operational momentum to preserve human life and continental peace. You would rather absorb humiliation yourself than impose it on a people you cannot fully control.",
           blindSpot: "Can appear irresolute to aggressive factions exploiting delay to mobilize troops.",
         },
       },
@@ -262,7 +262,7 @@ export const scenarios: Scenario[] = [
             "You compartmentalize violence: precise, fast, and limited. Containment of the wider war is always the greater objective.",
           metrics: { vision: 68, courage: 75, risk: 65, control: 70, empathy: 42, ethics: 58 },
           patternNote:
-            "You attempt to compartmentalize kinetic operations, delivering retribution while striving to contain wider war. You believe precision and speed can insulate you from broader geopolitical alliances.",
+            "You attempt to compartmentalize kinetic operations, delivering retribution while striving to contain wider war. You believe precision and speed can insulate you from broader geopolitical alliances. You keep your violence narrow so that it never becomes a story other powers feel obliged to join.",
           blindSpot: "Assumes local containment is possible once national boundaries are violated.",
         },
       },
@@ -278,7 +278,7 @@ export const scenarios: Scenario[] = [
             "You never stand alone. Binding stronger allies to your cause multiplies your deterrence before you ever move.",
           metrics: { vision: 72, courage: 62, risk: 85, control: 48, empathy: 28, ethics: 38 },
           patternNote:
-            "You seek to anchor your strategic decisions within a broader defensive coalition before taking bold steps. You amplify your own deterrence by binding stronger allies directly to your cause.",
+            "You seek to anchor your strategic decisions within a broader defensive coalition before taking bold steps. You amplify your own deterrence by binding stronger allies directly to your cause. Your deterrence is real, but it is borrowed, and borrowed resolve lasts exactly as long as your allies' commitment.",
           blindSpot: "Surrenders strategic destiny to external alliance momentum.",
         },
       },
@@ -294,7 +294,7 @@ export const scenarios: Scenario[] = [
             "You absorb external shocks and keep focus on internal order. Civil composure and legal rigor are your instruments.",
           metrics: { vision: 78, courage: 52, risk: 32, control: 86, empathy: 68, ethics: 84 },
           patternNote:
-            "You deliberately internalize external shocks, keeping focus strictly on homeland stability and order. You value civil composure and legal rigor over external sabre-rattling.",
+            "You deliberately internalize external shocks, keeping focus strictly on homeland stability and order. You value civil composure and legal rigor over external sabre-rattling. Your restraint is genuine, though it also allows the machinery working against you to grow completely undisturbed.",
           blindSpot: "Leaves external conspiratorial apparatuses fully intact and emboldened.",
         },
       },
@@ -320,7 +320,7 @@ export const scenarios: Scenario[] = [
             "You calculate warfare in stark numbers. A concentrated sacrifice to halt wider bloodshed is, to you, the arithmetic of survival.",
           metrics: { vision: 82, courage: 85, risk: 80, control: 60, empathy: 22, ethics: 32 },
           patternNote:
-            "You calculate warfare in stark numbers, sacrificing a concentrated area to halt wider systemic bloodshed. You choose immediate, brutal decisiveness over prolonged attrition.",
+            "You calculate warfare in stark numbers, sacrificing a concentrated area to halt wider systemic bloodshed. You choose immediate, brutal decisiveness over prolonged attrition. You accept permanent moral debt in exchange for a short-term arithmetic win.",
           blindSpot: "Introduces apocalyptic moral precedents and sets off an uncontainable global arms race.",
         },
       },
@@ -336,7 +336,7 @@ export const scenarios: Scenario[] = [
             "Doctrine is your anchor. You accept immense troop attrition as the natural price of an unconditional victory.",
           metrics: { vision: 48, courage: 92, risk: 88, control: 58, empathy: 28, ethics: 50 },
           patternNote:
-            "You adhere strictly to conventional military doctrine, valuing decisive battlefield conquest over revolutionary weapons. You accept immense troop attrition as the natural cost of unconditional victory.",
+            "You adhere strictly to conventional military doctrine, valuing decisive battlefield conquest over revolutionary weapons. You accept immense troop attrition as the natural cost of unconditional victory. You will not bend doctrine for an opponent you consider already defeated in principle.",
           blindSpot: "Severe insensitivity to military casualty projections and prolonged operational attrition.",
         },
       },
@@ -352,7 +352,7 @@ export const scenarios: Scenario[] = [
             "Time is your weapon. You drain adversary capability while keeping your own forces safely out of reach.",
           metrics: { vision: 66, courage: 48, risk: 38, control: 82, empathy: 32, ethics: 48 },
           patternNote:
-            "You believe time and logistical asphyxiation are far superior weapons than reckless frontline assaults. You systematically drain the adversary's capability while keeping your own forces safely out of reach.",
+            "You believe time and logistical asphyxiation are far superior weapons than reckless frontline assaults. You systematically drain the adversary's capability while keeping your own forces safely out of reach. Patience costs you nothing until it does, and you tend to keep paying well past the point where it stays free.",
           blindSpot: "Prolongs civilian famine and leaves room for unexpected third-party interventions.",
         },
       },
@@ -368,7 +368,7 @@ export const scenarios: Scenario[] = [
             "You exhaust every ethical alternative first. If victory is still required, you reach for awe rather than annihilation.",
           metrics: { vision: 88, courage: 56, risk: 62, control: 64, empathy: 82, ethics: 94 },
           patternNote:
-            "You explore every conceivable ethical alternative before unleashing irreversible destructive force on humans. You seek to achieve victory through psychological awe rather than physical annihilation.",
+            "You explore every conceivable ethical alternative before unleashing irreversible destructive force on humans. You seek to achieve victory through psychological awe rather than physical annihilation. You would accept an ambiguous outcome rather than a clean one purchased with your own principles.",
           blindSpot: "If the demonstration fails or is dismissed by the adversary, ultimate deterrence is compromised.",
         },
       },
@@ -384,7 +384,7 @@ export const scenarios: Scenario[] = [
             "You recognise that respecting an adversary’s core is the fastest road to lasting peace, not a sign of weakness.",
           metrics: { vision: 90, courage: 60, risk: 40, control: 74, empathy: 70, ethics: 76 },
           patternNote:
-            "You recognize that respecting an adversary's cultural core is the fastest path to lasting peace. You prefer pragmatic compromise over ideological humiliation.",
+            "You recognize that respecting an adversary's cultural core is the fastest path to lasting peace. You prefer pragmatic compromise over ideological humiliation. You treat a dignified settlement as the final move rather than a temporary truce.",
           blindSpot: "Risks massive domestic backlash from populations demanding unconditional vengeance.",
         },
       },
@@ -410,7 +410,7 @@ export const scenarios: Scenario[] = [
             "You read every crisis through an ideological lens. Commitment escalates on principle, never on calculation.",
           metrics: { vision: 60, courage: 84, risk: 89, control: 45, empathy: 24, ethics: 30 },
           patternNote:
-            "You view local conflicts through a rigid ideological lens, escalating commitments without hesitation. You leverage crisis moments to secure sweeping executive power.",
+            "You view local conflicts through a rigid ideological lens, escalating commitments without hesitation. You leverage crisis moments to secure sweeping executive power. Escalation, in your telling, proves resolve, and resolve is what keeps distant allies aligned.",
           blindSpot: "Traps the nation in an unwinnable, asymmetric counter-insurgency jungle quagmire.",
         },
       },
@@ -426,7 +426,7 @@ export const scenarios: Scenario[] = [
             "You calibrate every response. Strength is demonstrated, boundaries re-established, and total war quietly avoided.",
           metrics: { vision: 70, courage: 62, risk: 52, control: 76, empathy: 48, ethics: 64 },
           patternNote:
-            "You prefer calibrated, proportional responses that demonstrate strength without provoking total war. You seek to re-establish boundaries through controlled tactical signals.",
+            "You prefer calibrated, proportional responses that demonstrate strength without provoking total war. You seek to re-establish boundaries through controlled tactical signals. You measure every action against the escalation you are trying to prevent, not the one you could inflict.",
           blindSpot: "Often misread as weakness by ideologically committed guerrilla forces.",
         },
       },
@@ -442,7 +442,7 @@ export const scenarios: Scenario[] = [
             "You operate where accountability cannot reach. Quiet disruption, no official declaration, no paper trail.",
           metrics: { vision: 65, courage: 68, risk: 68, control: 58, empathy: 36, ethics: 44 },
           patternNote:
-            "You favor deniable, asymmetric operations that minimize public scrutiny and formal accountability. You attempt to disrupt enemy networks quietly while avoiding official military declarations.",
+            "You favor deniable, asymmetric operations that minimize public scrutiny and formal accountability. You attempt to disrupt enemy networks quietly while avoiding official military declarations. You buy room to maneuver by keeping your own hand invisible, then operate inside that shadow.",
           blindSpot: "Creeping operational escalation without clear exit criteria or moral accountability.",
         },
       },
@@ -457,7 +457,7 @@ export const scenarios: Scenario[] = [
             "Treaties and neutral observers are your primary shield. Legal accountability, in your view, is the only lasting stability.",
           metrics: { vision: 84, courage: 42, risk: 34, control: 66, empathy: 86, ethics: 90 },
           patternNote:
-            "You turn to international treaties and multinational observers as your primary shield against crisis. You believe legal accountability and multilateral bodies provide the only lasting stability.",
+            "You turn to international treaties and multinational observers as your primary shield against crisis. You believe legal accountability and multilateral bodies provide the only lasting stability. You believe rules hold only when everyone is bound by them, and you distrust any side that tests that assumption.",
           blindSpot: "Easily bypassed by asymmetric guerilla logistics networks (e.g., Ho Chi Minh Trail).",
         },
       },
@@ -473,7 +473,7 @@ export const scenarios: Scenario[] = [
             "You measure intervention strictly by strategic return. Local partners carry the burden; you preserve the resources.",
           metrics: { vision: 76, courage: 54, risk: 46, control: 70, empathy: 52, ethics: 60 },
           patternNote:
-            "You protect your core strategic resources by requiring local partners to shoulder the direct burden of conflict. You measure military intervention strictly by strategic return on investment.",
+            "You protect your core strategic resources by requiring local partners to shoulder the direct burden of conflict. You measure military intervention strictly by strategic return on investment. You watch the return closely and withdraw at the first sign that the arrangement is failing on the ground.",
           blindSpot: "Leads to rapid local proxy collapse if recipient institutions suffer systemic corruption.",
         },
       },

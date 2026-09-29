@@ -60,7 +60,7 @@ const splitPatternNotes = (patternNote: string) =>
     .split(/(?<=\.)\s+/)
     .map((note) => note.trim())
     .filter(Boolean)
-    .slice(0, 2);
+    .slice(0, 3);
 
 const getWeakestMetric = (metrics: Metrics) =>
   metricAxes.reduce((weakest, axis) => (metrics[axis.key] < metrics[weakest.key] ? axis : weakest));
