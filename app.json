@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "fateful-moment",
+    "name": "Fateful Moment",
     "slug": "fateful-moment",
     "version": "1.0.0",
     "orientation": "landscape",
@@ -38,7 +38,16 @@
           "hidden": true
         }
       ],
-      "./plugins/withForcedEdgeToEdge"
+      "./plugins/withForcedEdgeToEdge",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/app/app_icon_foreground.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#020617"
+        }
+      ]
     ],
     "experiments": {
       "tsconfigPaths": true
