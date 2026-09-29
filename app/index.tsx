@@ -2,6 +2,7 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "rea
 import { router } from "expo-router";
 import { colors } from "@/constants/theme";
 import { ROUTES } from "@/utils/routes";
+import { enterApp } from "@/utils/navigation";
 import EmailIcon from "@/assets/icons/email.svg";
 import AppleIcon from "@/assets/icons/apple.svg";
 import GoogleIcon from "@/assets/icons/google.svg";
@@ -25,7 +26,7 @@ export default function WelcomeScreen() {
           <Text style={styles.primaryButtonText}>Continue with Email</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.guestButton} onPress={() => router.replace(ROUTES.SCENARIOS)}>
+        <TouchableOpacity style={styles.guestButton} onPress={() => enterApp(ROUTES.SCENARIOS)}>
           <Text style={styles.guestButtonText}>Continue without creating an account</Text>
         </TouchableOpacity>
 

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View, Platform } from "react-native";
-import { router } from "expo-router";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
-import { ROUTES } from "@/utils/routes";
+import { leaveApp } from "@/utils/navigation";
 import { supabase } from "@/services/supabase";
 
 export default function SettingsScreen() {
@@ -43,7 +42,7 @@ export default function SettingsScreen() {
       return;
     }
 
-    router.replace(ROUTES.WELCOME);
+    leaveApp();
   };
 
   return (
@@ -75,7 +74,7 @@ export default function SettingsScreen() {
         ) : (
           <TouchableOpacity
             style={[styles.button, styles.loginButton]}
-            onPress={() => router.replace(ROUTES.WELCOME)}
+            onPress={leaveApp}
             activeOpacity={0.8}
           >
             <Text style={styles.loginButtonText}>Log in</Text>

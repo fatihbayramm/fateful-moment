@@ -18,6 +18,7 @@ import { router } from "expo-router";
 
 import { colors } from "@/constants/theme";
 import { createDeepLink, ROUTES } from "@/utils/routes";
+import { enterApp } from "@/utils/navigation";
 import { signInFromDeepLink, supabase } from "@/services/supabase";
 import { useKeyboardVisible } from "@/hooks/useKeyboardVisible";
 
@@ -216,7 +217,7 @@ export default function ResetPasswordScreen() {
         return;
       }
 
-      router.replace(ROUTES.SCENARIOS);
+      enterApp(ROUTES.SCENARIOS);
     } catch {
       setError("Something went wrong. Please check your connection and try again.");
     } finally {
