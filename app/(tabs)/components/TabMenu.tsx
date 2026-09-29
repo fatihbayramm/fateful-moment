@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router, usePathname } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@/constants/theme";
 import { getPathname, ROUTES } from "@/utils/routes";
 import MenuIcon from "@/assets/icons/menu.svg";
@@ -31,9 +32,16 @@ export default function TabMenu() {
         <MenuIcon {...iconStyle} color={colors.text.main} />
       </Pressable>
 
-      <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
+      <Modal
+        visible={open}
+        transparent
+        animationType="fade"
+        statusBarTranslucent
+        navigationBarTranslucent
+        onRequestClose={() => setOpen(false)}
+      >
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
-          <View style={styles.sheet}>
+          <SafeAreaView style={styles.sheet} edges={["top", "left", "right"]}>
             <Text style={styles.title}>Menu</Text>
 
             <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
@@ -55,7 +63,7 @@ export default function TabMenu() {
                 );
               })}
             </ScrollView>
-          </View>
+          </SafeAreaView>
         </Pressable>
       </Modal>
     </>

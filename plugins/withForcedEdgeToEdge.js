@@ -8,7 +8,25 @@ const { withMainActivity } = require("@expo/config-plugins");
  *
  * This plugin forces `WindowCompat.setDecorFitsSystemWindows(window, false)` in MainActivity so
  * the app always draws edge-to-edge, on every Android version.
+ *
+ * It also sets `LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS`, which is what React Native's own
+ * `Window.enableEdgeToEdge()` does. Without it the activity window keeps the default cutout mode
+ * and stays letterboxed on cutout edges, while Modal dialog windows (which run the same
+ * edge-to-edge setup) are not. That mismatch is what shows up as a strip on one side of the
+ * screen once a transparent Modal is opened.
  */
+const REQUIRED_IMPORTS = ["android.os.Build", "android.view.WindowManager", "androidx.core.view.WindowCompat"];
+
+const EDGE_TO_EDGE = [
+  "    WindowCompat.setDecorFitsSystemWindows(window, false)",
+  "    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {",
+  "      window.attributes = window.attributes.apply {",
+  "        layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS",
+  "      }",
+  "    }",
+  "",
+].join("\n").replace(/\n$/, "\n");
+
 const withForcedEdgeToEdge = (config) =>
   withMainActivity(config, (modConfig) => {
     if (modConfig.modResults.language !== "kt") {
@@ -21,18 +39,18 @@ const withForcedEdgeToEdge = (config) =>
       return modConfig;
     }
 
-    const imports = `import androidx.core.view.WindowCompat\n`;
+    const missingImports = REQUIRED_IMPORTS.filter((name) => !contents.includes(`import ${name}\n`));
 
-    if (!contents.includes("import androidx.core.view.WindowCompat")) {
+    if (missingImports.length > 0) {
+      const imports = missingImports.map((name) => `import ${name}\n`).join("");
+
       contents = contents.replace(
         /^import com\.facebook\.react\.ReactActivity$/m,
         `${imports}import com.facebook.react.ReactActivity`
       );
     }
 
-    const edgeToEdge = `    WindowCompat.setDecorFitsSystemWindows(window, false)\n`;
-
-    contents = contents.replace(/(super\.onCreate\((?:null|savedInstanceState)\)\r?\n)/, `$1${edgeToEdge}`);
+    contents = contents.replace(/(super\.onCreate\((?:null|savedInstanceState)\)\r?\n)/, `$1${EDGE_TO_EDGE}`);
 
     modConfig.modResults.contents = contents;
 
