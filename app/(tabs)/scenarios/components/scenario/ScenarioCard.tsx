@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     bottom: 10,
   },
   button: {
-    backgroundColor: "rgba(2, 6, 23, 0.8)",
+    backgroundColor: colors.secondary.main,
     borderWidth: 1,
     borderColor: colors.primary.main,
     paddingVertical: 6,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonText: {
-    color: colors.text.main,
+    color: colors.primary.main,
     fontWeight: "bold",
   },
 });
