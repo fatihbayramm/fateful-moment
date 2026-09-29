@@ -10,7 +10,10 @@
     "backgroundColor": "#020617",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fatihbayramybs.fatefulmoment"
+      "bundleIdentifier": "com.fatihbayramybs.fatefulmoment",
+      "infoPlist": {
+        "UIViewControllerBasedStatusBarAppearance": true
+      }
     },
     "android": {
       "backgroundColor": "#020617",
@@ -42,8 +45,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/app/app_icon_foreground.png",
-          "imageWidth": 200,
+          "image": "./assets/images/app/app_icon_splash.png",
+          "imageWidth": 260,
           "resizeMode": "contain",
           "backgroundColor": "#020617"
         }
