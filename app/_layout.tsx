@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { NavigationBar } from "expo-navigation-bar";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors } from "@/constants/theme";
@@ -8,13 +7,13 @@ import { colors } from "@/constants/theme";
 export default function RootLayout() {
   return (
     <SafeAreaView style={styles.root} edges={["top", "bottom", "left", "right"]}>
-      <StatusBar hidden />
       <NavigationBar hidden />
 
       <Stack
         screenOptions={{
           headerShown: false,
           orientation: "landscape",
+          statusBarHidden: true,
           contentStyle: {
             backgroundColor: colors.background.main,
           },
@@ -25,6 +24,8 @@ export default function RootLayout() {
           options={{
             headerShown: false,
             orientation: "portrait",
+            statusBarHidden: false,
+            statusBarStyle: "light",
           }}
         />
 
@@ -33,6 +34,8 @@ export default function RootLayout() {
           options={{
             headerShown: false,
             orientation: "portrait",
+            statusBarHidden: false,
+            statusBarStyle: "light",
           }}
         />
 
@@ -41,6 +44,8 @@ export default function RootLayout() {
           options={{
             headerShown: false,
             orientation: "portrait",
+            statusBarHidden: false,
+            statusBarStyle: "light",
           }}
         />
 
@@ -49,6 +54,8 @@ export default function RootLayout() {
           options={{
             headerShown: false,
             orientation: "portrait",
+            statusBarHidden: false,
+            statusBarStyle: "light",
           }}
         />
 
