@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   subHeader: {
     color: colors.primary.main,
     fontSize: 13,
+    fontFamily: Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" }),
   },
   card: {
     backgroundColor: colors.secondary.main,

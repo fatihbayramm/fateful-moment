@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, StyleSheet, TouchableOpacity, View, Platform } from "react-native";
 import { router } from "expo-router";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
 import { colors } from "@/constants/theme";
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     color: colors.primary.main,
     marginBottom: 16,
     fontSize: 13,
+    fontFamily: Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" }),
   },
   card: {
     backgroundColor: colors.secondary.main,

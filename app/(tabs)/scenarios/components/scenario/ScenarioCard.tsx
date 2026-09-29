@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary.main,
     borderWidth: 1,
     borderColor: colors.border.main,
+    height: 200,
   },
   image: {
     flex: 1,
