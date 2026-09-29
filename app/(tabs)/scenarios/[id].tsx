@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   description: {
-    color: colors.text.main,
+    color: colors.bodyText.main,
     fontSize: 16,
     lineHeight: 26,
     textAlign: "center",

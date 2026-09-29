@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     marginBottom: 4,
+    fontStyle: "italic",
   },
   description: {
     flex: 1,

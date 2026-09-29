@@ -7,7 +7,7 @@ import type { DecisionDna as DecisionDnaType, Metrics } from "@/data/scenarios";
 import DnaIcon from "@/assets/icons/dna.svg";
 import ActivityIcon from "@/assets/icons/activity.svg";
 import TargetIcon from "@/assets/icons/target.svg";
-import EyeIcon from "@/assets/icons/eye.svg";
+import EyeIcon from "@/assets/icons/eye_3.svg";
 import VectorIcon from "@/assets/icons/vector.svg";
 import RiskIcon from "@/assets/icons/risk.svg";
 import SettingsIcon from "@/assets/icons/settings_2.svg";

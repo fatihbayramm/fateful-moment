@@ -125,7 +125,7 @@ export const scenarios: Scenario[] = [
   },
   {
     id: 2,
-    title: "Cuban Missile Crisis",
+    title: "Cuban Missile Crisis (1962)",
     description: "A world on the brink of nuclear annihilation. You are in Kennedy's seat.",
     time: "1:25 min",
     image: "assets/images/scenarios/cuban_missile_crisis.jpeg",

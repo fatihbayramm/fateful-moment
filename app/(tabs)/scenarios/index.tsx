@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Platform } from "react-native";
 import { router } from "expo-router";
 import ScenarioCard from "@/app/(tabs)/scenarios/components/scenario/ScenarioCard";
 import TabMenu from "@/app/(tabs)/components/TabMenu";
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     color: colors.primary.main,
     marginBottom: 8,
     fontSize: 13,
+    fontFamily: Platform.select({ ios: "Menlo", android: "monospace", default: "monospace" }),
   },
   count: {
     color: colors.bodyText.main,
