@@ -1,11 +1,9 @@
 import { Tabs } from "expo-router";
 import { NavigationBar } from "expo-navigation-bar";
-import { StatusBar } from "expo-status-bar";
 
 export default function TabLayout() {
   return (
     <>
-      <StatusBar hidden />
       <NavigationBar hidden />
 
       <Tabs
