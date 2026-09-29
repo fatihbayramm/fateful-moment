@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router, usePathname } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/constants/theme";
 import { getPathname, ROUTES } from "@/utils/routes";
 import MenuIcon from "@/assets/icons/menu.svg";
 import CompassIcon from "@/assets/icons/compass.svg";
 import DnaIcon from "@/assets/icons/dna.svg";
 import SettingsIcon from "@/assets/icons/settings.svg";
+
+const SHEET_PADDING = 16;
 
 const routes = [
   { href: ROUTES.SCENARIOS, label: "SCENARIOS", Icon: CompassIcon },
@@ -20,6 +22,7 @@ const iconStyle = { width: 22, height: 22 };
 export default function TabMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const insets = useSafeAreaInsets();
 
   const handleSelect = (href: (typeof routes)[number]["href"]) => {
     setOpen(false);
@@ -43,7 +46,13 @@ export default function TabMenu() {
         onRequestClose={() => setOpen(false)}
       >
         <Pressable style={styles.backdrop} onPress={() => setOpen(false)}>
-          <SafeAreaView style={styles.sheet} edges={["top", "left", "right"]}>
+          {/*
+            The inset comes from the app's own window through the context and is applied as plain
+            padding, rather than through a SafeAreaView. SafeAreaView is a native component that
+            measures the window it is rendered in, and a Modal gets a fresh window whose safe area
+            reports zero on first presentation — that is what pushed the labels under the cutout.
+          */}
+          <View style={[styles.sheet, { paddingLeft: SHEET_PADDING + insets.left }]}>
             <Text style={styles.title}>Menu</Text>
 
             <ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
@@ -65,7 +74,7 @@ export default function TabMenu() {
                 );
               })}
             </ScrollView>
-          </SafeAreaView>
+          </View>
         </Pressable>
       </Modal>
     </>
@@ -90,7 +99,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderRightColor: colors.border.main,
     paddingTop: 48,
-    paddingHorizontal: 16,
+    paddingRight: SHEET_PADDING,
   },
   title: {
     color: colors.bodyText.main,
