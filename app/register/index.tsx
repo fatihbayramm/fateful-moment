@@ -196,7 +196,7 @@ export default function RegisterScreen() {
           <View style={styles.field}>
             <TextInput
               style={[styles.input, loading && styles.inputDisabled, fieldErrors.email && styles.inputError]}
-              placeholder="Email"
+              placeholder="Your email address"
               placeholderTextColor={colors.bodyText.main}
               value={email}
               onChangeText={(value) => handleChange("email", value)}
@@ -427,6 +427,7 @@ const styles = StyleSheet.create({
     color: colors.primary.main,
     fontSize: 12,
     fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   footerLinkDisabled: {
     opacity: 0.5,

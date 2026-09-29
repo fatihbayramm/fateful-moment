@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
     color: colors.primary.main,
     fontSize: 12,
     fontWeight: "bold",
+    textDecorationLine: "underline",
   },
   linkDisabled: {
     opacity: 0.5,
