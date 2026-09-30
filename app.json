@@ -54,6 +54,18 @@
     ],
     "experiments": {
       "tsconfigPaths": true
+    },
+    "extra": {
+      "expo-navigation-bar": {
+        "enforceContrast": false,
+        "hidden": true
+      },
+      "expo-status-bar": {
+        "hidden": true
+      },
+      "eas": {
+        "projectId": "39b99317-1989-4d55-89b9-843a408e9ac2"
+      }
     }
   }
 }
