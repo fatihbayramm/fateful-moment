@@ -345,14 +345,39 @@ EXPO_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 EXPO_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 ```
 
+### For cloud builds, push them to EAS
+
+`EXPO_PUBLIC_*` values are **inlined into the JavaScript bundle at build time** — they are read by
+the machine that runs the bundler, not at runtime on the device. EAS builds run on EAS's servers and
+upload the project respecting `.gitignore`, so `.env` never reaches the builder:
+
+```bash
+npx eas-cli env:push --path .env --environment preview --environment production --force
+```
+
+Verify what is stored with `npx eas-cli env:list`.
+
+> **Without this, a cloud build looks fine and then crashes on tap.** The welcome screen does not
+> import the Supabase client, so the app opens normally — and throws the moment you navigate to
+> register, sign in, reset your password, or settings. If you are debugging an install that dies on
+> the first interaction, check this first.
+
+### A note on what these values are
+
+`EXPO_PUBLIC_` means "this ends up in the shipped bundle and is readable by anyone who unzips the
+app". That is correct and intended for the Supabase **anon key** — it is a public identifier, and
+access is controlled by Row Level Security. Never put a service-role key or any other secret behind
+an `EXPO_PUBLIC_` prefix.
+
 Then add the redirect URL in **Supabase → Authentication → URL Configuration → Additional Redirect URLs**:
 
 ```
 fatefulmoment://**
 ```
 
-> The app throws at startup if either variable is missing, so a misconfigured build fails loudly
-> instead of silently failing every sign-in.
+> The app fails fast if either variable is missing, so a misconfigured build should never ship
+> silently — but the check runs when a screen that needs the client is first imported, not at
+> startup. See [Known Limitations](#known-limitations).
 
 ---
 
@@ -412,6 +437,10 @@ Android and a 90°-counter-clockwise pre-rotated one for iOS.
   makes the link work from every browser. Until then the flow is functional but not frictionless.
 - **Results are not persisted.** The Decision DNA is computed and displayed; there is no profile
   history or comparison between sessions yet.
+- **A build with missing env vars fails late.** `services/supabase.ts` throws when the module is
+  first imported, not at app start. The welcome screen does not import it, so a misconfigured build
+  opens normally and only dies on the first navigation. See
+  [Environment Variables](#environment-variables).
 - **Guest mode is local-only.** Playing without an account works, but nothing is saved.
 - **English only.** The copy is written in English; Turkish is not wired up.
 
