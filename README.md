@@ -51,53 +51,8 @@ Five scenarios. Twenty-five possible decisions. Twenty-five distinct archetypes.
 ## Screenshots
 
 > Drop captures into `assets/screenshots/` using the filenames below and they will render here.
+> 
 
-### iOS
-
-<table>
-<tr>
-<td width="50%" align="center"><em>Welcome</em></td>
-<td width="50%" align="center"><em>Register</em></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/ios-welcome.png" alt="Welcome screen" width="100%"></td>
-<td><img src="assets/screenshots/ios-register.png" alt="Register screen" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><em>Sign in</em></td>
-<td align="center"><em>Reset your email</em></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/ios-login.png" alt="Sign in screen" width="100%"></td>
-<td><img src="assets/screenshots/ios-reset-password.png" alt="Check your email screen" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><em>Scenarios</em></td>
-<td align="center"><em>Scenario briefing</em></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/ios-scenarios.png" alt="Scenario list" width="100%"></td>
-<td><img src="assets/screenshots/ios-scenario-detail.png" alt="Scenario detail" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><em>Decision options</em></td>
-<td align="center"><em>Your Decision DNA</em></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/ios-scenario-options.png" alt="Scenario options" width="100%"></td>
-<td><img src="assets/screenshots/ios-decision-dna.png" alt="Decision DNA result" width="100%"></td>
-</tr>
-<tr>
-<td align="center"><em>Menu</em></td>
-<td align="center"><em>Settings</em></td>
-</tr>
-<tr>
-<td><img src="assets/screenshots/ios-menu.png" alt="Tab menu" width="100%"></td>
-<td><img src="assets/screenshots/ios-settings.png" alt="Settings screen" width="100%"></td>
-</tr>
-</table>
-
-### Android
 
 <table>
 <tr>
@@ -105,40 +60,49 @@ Five scenarios. Twenty-five possible decisions. Twenty-five distinct archetypes.
 <td width="50%" align="center"><em>Register</em></td>
 </tr>
 <tr>
-<td><img src="assets/screenshots/android-welcome.png" alt="Welcome screen" width="100%"></td>
-<td><img src="assets/screenshots/android-register.png" alt="Register screen" width="100%"></td>
+<td><img width="1080" height="2340" alt="Screenshot_20260930_150810_Fateful Moment" src="https://github.com/user-attachments/assets/0a40a0b3-5b72-4e96-8681-d61a2a0283d6" /></td>
+<td><img width="1080" height="2340" alt="Screenshot_20260930_150819_Fateful Moment" src="https://github.com/user-attachments/assets/16dca523-5b9e-4783-843a-be0374c098a2" /></td>
+
 </tr>
 <tr>
 <td align="center"><em>Sign in</em></td>
 <td align="center"><em>Reset your email</em></td>
 </tr>
 <tr>
-<td><img src="assets/screenshots/android-login.png" alt="Sign in screen" width="100%"></td>
-<td><img src="assets/screenshots/android-reset-password.png" alt="Check your email screen" width="100%"></td>
+<td><img width="1080" height="2340" alt="Screenshot_20260930_150832_Fateful Moment" src="https://github.com/user-attachments/assets/f1dbb7f1-eb73-4fb8-9c69-173e16160c34" /></td>
+<td><img width="1080" height="2340" alt="Screenshot_20260930_151302_Fateful Moment" src="https://github.com/user-attachments/assets/83a263ce-d9e1-458a-b30c-e013fc80c72b" /></td>
 </tr>
 <tr>
 <td align="center"><em>Scenarios</em></td>
 <td align="center"><em>Scenario briefing</em></td>
 </tr>
 <tr>
-<td><img src="assets/screenshots/android-scenarios.png" alt="Scenario list" width="100%"></td>
-<td><img src="assets/screenshots/android-scenario-detail.png" alt="Scenario detail" width="100%"></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151006_Fateful Moment" src="https://github.com/user-attachments/assets/4c2554ea-b183-4699-a90c-8cfd84535c7d" /></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151012_Fateful Moment" src="https://github.com/user-attachments/assets/100e62d5-547a-413b-b298-61d5f0805153" /></td>
 </tr>
 <tr>
 <td align="center"><em>Decision options</em></td>
 <td align="center"><em>Your Decision DNA</em></td>
 </tr>
 <tr>
-<td><img src="assets/screenshots/android-scenario-options.png" alt="Scenario options" width="100%"></td>
-<td><img src="assets/screenshots/android-decision-dna.png" alt="Decision DNA result" width="100%"></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151021_Fateful Moment" src="https://github.com/user-attachments/assets/12cd8898-d735-4f7a-b6c6-2360f23af615" /></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151153_Fateful Moment" src="https://github.com/user-attachments/assets/5770d645-4fda-433f-8aed-74c37294840d" /></td>
 </tr>
 <tr>
 <td align="center"><em>Menu</em></td>
 <td align="center"><em>Settings</em></td>
 </tr>
 <tr>
-<td><img src="assets/screenshots/android-menu.png" alt="Tab menu" width="100%"></td>
-<td><img src="assets/screenshots/android-settings.png" alt="Settings screen" width="100%"></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151209_Fateful Moment" src="https://github.com/user-attachments/assets/b0efed9b-a2cb-4407-a7c2-c41dfe517f14" /></td>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151222_Fateful Moment" src="https://github.com/user-attachments/assets/60ce3c2d-2c12-4fda-b5fe-eb753c988549" /></td>
+</tr>
+<tr>
+<td align="center"><em>DNA Tab</em></td>
+<td align="center"><em>Form Fail</em></td>
+</tr>
+<tr>
+<td><img width="2340" height="1080" alt="Screenshot_20260930_151213_Fateful Moment" src="https://github.com/user-attachments/assets/391b62d6-328b-4b4a-86c0-e6ff257a3bef" /></td>
+<td><img width="1080" height="2340" alt="Screenshot_20260930_151325_Fateful Moment" src="https://github.com/user-attachments/assets/5401e563-d96e-4cea-bfa4-70544605a525" /></td>
 </tr>
 </table>
 
